@@ -1,23 +1,29 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
+require("dotenv").config();
 const users = require("./routes/api/users");
 
 const app = express();
 
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
 // DB config
-const db = require("./config/keys").mongoURI;
+// const db = require("./config/keys").mongoURI;
 
 mongoose.Promise = global.Promise;
 mongoose
   .connect(
-    db,
+    process.env.DATABASE,
     { useNewUrlParser: true }
   )
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
-
-app.get("/", (req, res) => res.send("Hello"));
 
 // use routes
 app.use("/api/users", users);
