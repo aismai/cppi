@@ -1,21 +1,24 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
+
+// Input Validation
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 // load User model
 const User = require("../../models/User");
-
-// @route  GET api/users/test
-// @desc   Test users route
-// @access Public
-router.get("/test", (req, res) => res.json({ msg: "Users route works" }));
 
 // @route  GET api/users/register
 // @desc   Register user
 // @access Public
 router.post("/register", (req, res) => {
-  const newUser = new User(req.body);
+  const { errors, isValid } = validateRegisterInput(req.body);
 
+  if (!isValid) return res.status(400).json(errors);
+
+  const newUser = new User(req.body);
   newUser.save((err, doc) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({ success: true, userdata: doc });
@@ -26,6 +29,10 @@ router.post("/register", (req, res) => {
 // @desc   Login user
 // @access Public
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) return res.status(400).json(errors);
+
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) return res.json({ login: false, msg: "Email not found" });
 
