@@ -1,1 +1,14 @@
 @import "~antd/dist/antd.css";
+
+.logo {
+  width: 100px;
+  height: 32px;
+  margin-left: 28px;
+  float: left;
+}
+
+.logo img {
+  height: 40px;
+  padding: 5px;
+  width: auto;
+}
