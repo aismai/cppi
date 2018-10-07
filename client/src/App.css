@@ -44,3 +44,14 @@
   padding: 12px 100px 12px 0;
   font-weight: 500;
 }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  height: 60px;
+}
