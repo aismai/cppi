@@ -1,14 +1,46 @@
-@import "~antd/dist/antd.css";
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  color: #091e42;
+}
 
-.logo {
-  width: 100px;
-  height: 32px;
-  margin-left: 28px;
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 100px;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  border-bottom: #e7e7e7 1px solid;
+}
+
+.navbar li {
   float: left;
 }
 
-.logo img {
-  height: 40px;
-  padding: 5px;
-  width: auto;
+.navbar .nav-item__right {
+  float: right;
+}
+
+.navbar li a {
+  display: block;
+  color: #777;
+  text-align: center;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  color: #505050;
+}
+
+.navbar li a.active {
+  color: #202020;
+}
+
+.navbar .logo {
+  padding: 12px 100px 12px 0;
+  font-weight: 500;
 }
