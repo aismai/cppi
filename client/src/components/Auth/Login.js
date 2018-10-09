@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { Row, Col } from "antd";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+
+import { Form, Icon, Input, Button } from "antd";
 
 const FormItem = Form.Item;
+
+//todo: move to const
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class Login extends Component {
   constructor() {
@@ -12,6 +18,16 @@ class Login extends Component {
       email: "",
       password: ""
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onChange = e => {
@@ -25,57 +41,80 @@ class Login extends Component {
       password: this.state.password
     };
 
-    console.log(loginUser);
+    console.log("I AM HERE");
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log("Received values of form: ", values);
+
+        this.props.loginUser(loginUser);
+      }
+    });
   };
 
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
-      <div>
-        <Row>
-          <Col span={8} />
-          <Col span={8}>
-            <Form onSubmit={this.handleSubmit} className="login-form">
-              <FormItem>
-                <Input
-                  prefix={
-                    <Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  name="email"
-                  value={this.state.email}
-                  placeholder="Email"
-                  onChange={this.onChange}
-                />
-              </FormItem>
-              <FormItem>
-                <Input
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="password"
-                  name="password"
-                  value={this.state.password}
-                  placeholder="Password"
-                  onChange={this.onChange}
-                />
-              </FormItem>
-              <FormItem>
-                <Checkbox>Remember me</Checkbox>
-
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
-                >
-                  Log in
-                </Button>
-              </FormItem>
-            </Form>
-          </Col>
-          <Col span={8} />
-        </Row>
+      <div className="login-form-box">
+        <div className="login-form-box--logo">
+          <span>CPPI</span>
+        </div>
+        <Form onSubmit={this.handleSubmit} className="login-form">
+          <FormItem hasFeedback>
+            {getFieldDecorator("email", {
+              rules: [
+                { required: true, message: "Please input your email!" },
+                {
+                  pattern: new RegExp(emailRegex),
+                  message: "Must be a valid email address"
+                }
+              ]
+            })(
+              <Input
+                prefix={
+                  <Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="Email"
+              />
+            )}
+          </FormItem>
+          <FormItem hasFeedback>
+            {getFieldDecorator("password", {
+              rules: [
+                { required: true, message: "Please input your Password!" }
+              ]
+            })(
+              <Input
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                type="password"
+                placeholder="Password"
+              />
+            )}
+          </FormItem>
+          <FormItem>
+            <Button type="primary" htmlType="submit" block>
+              Войти
+            </Button>
+          </FormItem>
+        </Form>
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Form.create()(Login));
