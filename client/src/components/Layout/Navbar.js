@@ -4,38 +4,45 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
+import { Layout, Icon } from "antd";
+
+const { Header } = Layout;
+
 class Navbar extends Component {
+  toggle = () => {
+    this.props.toggle();
+  };
+
+  logOut = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
   render() {
-    const { isAuthenticated, user } = this.props.auth;
     return (
-      <nav className="navbar">
-        <ul>
-          <li>
-            <Link to="/" className="logo">
-              Home
-            </Link>
-          </li>
-          <li>
-            <a href="#news">News</a>
-          </li>
-          <li>
-            <a href="#contact">Contact</a>
-          </li>
-          <li>
-            <a href="#about">About</a>
-          </li>
-          <li className="nav-item__right">
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-      </nav>
+      <Header style={{ background: "#fff", padding: 0 }}>
+        <Icon
+          className="trigger"
+          type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
+          onClick={this.toggle}
+        />
+        <div
+          className="rightWrapper"
+          style={{ float: "right", paddingRight: "25px" }}
+        >
+          <span onClick={this.logOut} style={{ cursor: "pointer" }}>
+            Logout
+          </span>
+        </div>
+      </Header>
     );
   }
 }
 
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  toggle: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

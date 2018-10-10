@@ -1,57 +1,79 @@
-* {
-  padding: 0;
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  font-size: 12px;
-  color: #091e42;
+body {
+  background-color: #f8f8f8 !important;
 }
 
-.navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0 100px;
-  overflow: hidden;
-  background-color: #f8f8f8;
-  font-size: 14px;
-  border-bottom: #e7e7e7 1px solid;
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-.navbar li {
-  float: left;
+.trigger:hover {
+  color: #1890ff;
 }
 
-.navbar .nav-item__right {
-  float: right;
-}
-
-.navbar li a {
-  display: block;
-  color: #777;
+.logo {
+  height: 32px;
+  margin: 16px;
   text-align: center;
-  padding: 12px 16px;
-  text-decoration: none;
 }
 
-.navbar li a:hover {
-  color: #505050;
+.logo img {
+  height: 30px;
 }
 
-.navbar li a.active {
-  color: #202020;
+.login-form-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -160px 0 0 -160px;
+  width: 320px;
+  height: 320px;
+  padding: 36px;
+  -webkit-box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
 }
 
-.navbar .logo {
-  padding: 12px 100px 12px 0;
-  font-weight: 500;
+.login-form-box--logo {
+  cursor: pointer;
+  margin-bottom: 24px;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.footer {
-  position: fixed;
-  left: 0;
+.login-form-box--logo img {
+  width: 40px;
+  margin-right: 8px;
+}
+
+.login-form-box--logo span {
+  vertical-align: text-bottom;
+  font-size: 16px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  color: #1890ff;
+}
+
+.register-box {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
   bottom: 0;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  height: 60px;
+  left: 0;
+  padding: 20px;
+  width: 550px;
+  height: 550px;
+}
+
+.navbar-logout-link {
+  cursor: pointer;
 }

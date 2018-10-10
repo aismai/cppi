@@ -7,18 +7,11 @@ import { Form, Icon, Input, Button } from "antd";
 
 const FormItem = Form.Item;
 
-//todo: move to const
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 class Login extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
+  state = {
+    email: "",
+    password: ""
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
@@ -30,23 +23,23 @@ class Login extends Component {
     }
   }
 
+  componentDidMount() {
+    // todo: redirect with router
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const loginUser = {
-      email: this.state.email,
-      password: this.state.password
-    };
 
-    console.log("I AM HERE");
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-
-        this.props.loginUser(loginUser);
+        this.props.loginUser(values);
       }
     });
   };
@@ -56,15 +49,16 @@ class Login extends Component {
     return (
       <div className="login-form-box">
         <div className="login-form-box--logo">
+          <img src="/img/padlock.svg" alt="logo" className="login-logo" />
           <span>CPPI</span>
         </div>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem hasFeedback>
             {getFieldDecorator("email", {
               rules: [
-                { required: true, message: "Please input your email!" },
+                { required: true, message: "Please input your email" },
                 {
-                  pattern: new RegExp(emailRegex),
+                  type: "email",
                   message: "Must be a valid email address"
                 }
               ]
@@ -80,7 +74,8 @@ class Login extends Component {
           <FormItem hasFeedback>
             {getFieldDecorator("password", {
               rules: [
-                { required: true, message: "Please input your Password!" }
+                { required: true, message: "Please input your Password" },
+                { min: 8, message: "Password must be at least 8 characters" }
               ]
             })(
               <Input
@@ -94,7 +89,7 @@ class Login extends Component {
           </FormItem>
           <FormItem>
             <Button type="primary" htmlType="submit" block>
-              Войти
+              Login
             </Button>
           </FormItem>
         </Form>
