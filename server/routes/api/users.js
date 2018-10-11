@@ -57,4 +57,41 @@ router.post("/login", (req, res) => {
   });
 });
 
+// @route  GET api/users/all
+// @desc   Get all users
+// @access Private
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    User.find({}, { email: 1, name: 1, lastname: 1, createdAt: 1 }).then(
+      users => {
+        if (!users) {
+          errors.nouser = "There are no users";
+          res.status(404).json({ errors });
+        }
+
+        res.json(users);
+      }
+    );
+  }
+);
+
+// @route  POST api/users/delete
+// @desc   Delete multiple users
+// @access Private
+router.post(
+  "/delete",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { userIds } = req.body;
+
+    User.deleteMany({ id: { $in: userIds } })
+      .then(() => res.json({ success: true }))
+      .catch(err => res.status(404).json(err));
+  }
+);
+
 module.exports = router;
