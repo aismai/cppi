@@ -77,3 +77,7 @@ body {
 .navbar-logout-link {
   cursor: pointer;
 }
+
+.bread_crumb {
+  padding: 24px 0 0 20px;
+}

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Breadcrumb, Icon } from "antd";
 
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const { Sider, Content } = Layout;
 
@@ -30,8 +31,8 @@ class Landing extends Component {
           </div>
           <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1">
-              <Icon type="folder-open" />
-              <span>nav 1</span>
+              <Icon type="team" />
+              <span>Users</span>
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="video-camera" />
@@ -44,8 +45,15 @@ class Landing extends Component {
           </Menu>
         </Sider>
         <Layout>
-          {/* navbar */}
           <Navbar collapsed={this.state.collapsed} toggle={this.toggle} />
+          <div className="bread_crumb">
+            <Breadcrumb>
+              <Breadcrumb.Item>
+                <Icon type="team" style={{ paddingRight: "4px" }} />
+                Users
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
           <Content
             style={{
               margin: "24px 16px",
@@ -54,11 +62,9 @@ class Landing extends Component {
               minHeight: "90vh"
             }}
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-            provident nostrum omnis error delectus, deleniti incidunt. Nesciunt,
-            nemo deserunt, dignissimos, obcaecati nulla pariatur atque
-            laudantium libero omnis quas ad facilis!
+            {this.props.children}
           </Content>
+          <Footer />
         </Layout>
       </Layout>
     );
