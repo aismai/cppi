@@ -11,6 +11,7 @@ import Landing from "./components/Layout/Landing";
 
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Profiles from "./components/Profiles/Profiles";
 
 import "./App.css";
@@ -30,9 +31,8 @@ if (token) {
 
   //check for expired token
   const currentTime = Date.now() / 1000;
-
   if (decoded.exp < currentTime) {
-    store.dispatch(logoutUser);
+    store.dispatch(logoutUser());
     window.location.href = "/login";
   }
 }
@@ -47,7 +47,9 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Landing>
-                <PrivateRoute exact path="/" component={Profiles} />
+                {/* <Route exact path="/" component={Dashboard} /> */}
+                <PrivateRoute exact path="/users" component={Profiles} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Landing>
             </Switch>
           </div>

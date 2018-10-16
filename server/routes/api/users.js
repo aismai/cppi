@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const mongoose = require("mongoose");
 
 // Input Validation
 const validateRegisterInput = require("../../validation/register");
@@ -86,9 +87,9 @@ router.post(
   "/delete",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { userIds } = req.body;
+    const userIds = req.body.userIds.map(mongoose.Types.ObjectId);
 
-    User.deleteMany({ id: { $in: userIds } })
+    User.remove({ _id: { $in: userIds } })
       .then(() => res.json({ success: true }))
       .catch(err => res.status(404).json(err));
   }

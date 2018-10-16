@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
+import { Link } from "react-router-dom";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -31,29 +33,35 @@ class Landing extends Component {
           </div>
           <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1">
-              <Icon type="team" />
-              <span>Users</span>
+              <Link to="/users">
+                <Icon type="team" />
+                <span>Users</span>
+              </Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>nav 2</span>
+              <Link to="/dashboard">
+                <Icon type="video-camera" />
+                <span>nav 2</span>
+              </Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>nav 3</span>
+              <Link to="/login">
+                <Icon type="upload" />
+                <span>nav 3</span>
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
           <Navbar collapsed={this.state.collapsed} toggle={this.toggle} />
-          <div className="bread_crumb">
+          {/* <div className="bread_crumb">
             <Breadcrumb>
               <Breadcrumb.Item>
                 <Icon type="team" style={{ paddingRight: "4px" }} />
                 Users
               </Breadcrumb.Item>
             </Breadcrumb>
-          </div>
+          </div> */}
           <Content
             style={{
               margin: "24px 16px",
@@ -63,6 +71,8 @@ class Landing extends Component {
             }}
           >
             {this.props.children}
+            {/* <PrivateRoute exact path="/users" component={Profiles} />/ */}
+            {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
           </Content>
           <Footer />
         </Layout>
