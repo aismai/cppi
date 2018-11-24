@@ -11,7 +11,7 @@ const FormItem = Form.Item;
 let uuid = 0;
 
 class QuestionForm extends Component {
-  state = { visible: false };
+  state = { visible: false, disabled: true };
 
   componentWillUnmount = () => {
     uuid = 0;
@@ -21,8 +21,6 @@ class QuestionForm extends Component {
     const { form, question } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue("keys");
-    console.log("keys", keys);
-
     uuid = question ? form.getFieldValue(`answers`).length : uuid;
 
     const nextKeys = keys.concat(uuid);
@@ -33,6 +31,7 @@ class QuestionForm extends Component {
     form.setFieldsValue({
       keys: nextKeys
     });
+    this.setState({ disabled: false });
   };
 
   remove = k => {
@@ -164,7 +163,11 @@ class QuestionForm extends Component {
             </Button>
           </FormItem>
           <FormItem>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={this.state.disabled}
+            >
               Submit
             </Button>
           </FormItem>

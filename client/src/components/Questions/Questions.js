@@ -72,6 +72,7 @@ class Questions extends Component {
       </Row>
       <Table
         rowSelection={rowSelection}
+        pagination={{ pageSize: 10 }}
         columns={columns}
         dataSource={data}
         rowKey="_id"
