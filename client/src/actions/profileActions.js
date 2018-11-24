@@ -19,7 +19,6 @@ export const getAllUsers = () => dispatch => {
 };
 
 export const deleteUsers = userIds => dispatch => {
-  console.log("ACTION", userIds);
   axios.post("/api/users/delete", { userIds }).then(res =>
     dispatch({
       type: DELETE_USERS,

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getAllUsers, deleteUsers } from "../../actions/profileActions";
 import Moment from "react-moment";
 
-import { Table, Divider, Tag, Row, Col, Button, Icon } from "antd";
+import { Table, Row, Col, Button, Icon } from "antd";
 
 const columns = [
   {

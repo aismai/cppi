@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
 import { Link } from "react-router-dom";
 
@@ -28,26 +27,24 @@ class Landing extends Component {
           collapsed={this.state.collapsed}
           theme="light"
         >
-          <div className="logo">
-            <img src="/img/eye-open.svg" alt="eye-logo" />
-          </div>
-          <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
+          <div className="logo" />
+          <Menu theme="light" mode="inline" style={{ borderRight: "none" }}>
             <Menu.Item key="1">
-              <Link to="/users">
-                <Icon type="team" />
-                <span>Users</span>
+              <Link to="/dashboard">
+                <Icon type="dashboard" theme="outlined" />
+                <span>Dashboard</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to="/dashboard">
-                <Icon type="video-camera" />
-                <span>nav 2</span>
+              <Link to="/users">
+                <Icon type="user" theme="outlined" />
+                <span>Users</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link to="/login">
-                <Icon type="upload" />
-                <span>nav 3</span>
+              <Link to="/questions">
+                <Icon type="file-unknown" theme="outlined" />
+                <span>Survey Questions</span>
               </Link>
             </Menu.Item>
           </Menu>
@@ -71,8 +68,6 @@ class Landing extends Component {
             }}
           >
             {this.props.children}
-            {/* <PrivateRoute exact path="/users" component={Profiles} />/ */}
-            {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
           </Content>
           <Footer />
         </Layout>

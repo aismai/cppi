@@ -51,6 +51,10 @@ router.post("/login", (req, res) => {
         process.env.SECRET,
         { expiresIn: 86400 },
         (err, token) => {
+          if (err) {
+            console.log("Could not sign JWT token");
+            res.json(err);
+          }
           res.json({ login: true, token: `Bearer ${token}` });
         }
       );
