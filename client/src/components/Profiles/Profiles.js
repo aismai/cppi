@@ -57,17 +57,16 @@ class Profiles extends Component {
     return (
       <div>
         <Row style={{ paddingBottom: "20px" }}>
-          <Col span={6}>col-6</Col>
-          <Col span={6}>col-6</Col>
-          <Col span={6}>col-6</Col>
+          <Col span={6} />
+          <Col span={6} />
+          <Col span={6} />
           <Col span={6} style={{ textAlign: "right" }}>
             <Button
               type="danger"
               disabled={!this.state.selectedRowKeys.length}
               onClick={this.onClickDeleteUser}
             >
-              <Icon type="user-delete" theme="outlined" />
-              delete
+              <Icon type="delete" theme="outlined" />
             </Button>
           </Col>
         </Row>

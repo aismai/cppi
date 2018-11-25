@@ -22,6 +22,7 @@ class Question extends Component {
 
   renderQuestion = question => (
     <Card
+      bordered={false}
       title={question.body}
       extra={
         <Button type="dashed" onClick={this.toggleEditQuestion}>
@@ -43,7 +44,7 @@ class Question extends Component {
       })}
 
       <QuestionForm
-        title="Edit Question"
+        title="Редактировать вопрос"
         question={question}
         visible={this.state.showForm}
         closeDrawer={this.toggleEditQuestion}

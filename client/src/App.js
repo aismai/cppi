@@ -15,6 +15,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Profiles from "./components/Profiles/Profiles";
 import Questions from "./components/Questions/Questions";
 import Question from "./components/Questions/Question/Question";
+import PersonalData from "./components/PersonalData/PersonalData";
+import PersonalDatum from "./components/PersonalData/PersonalDatum/PersonalDatum";
 
 import "./App.css";
 import "antd/dist/antd.css";
@@ -50,8 +52,18 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Landing>
                 <PrivateRoute exact path="/" component={Dashboard} />
-                <PrivateRoute exact path="/users" component={Profiles} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute
+                  exact
+                  path="/personal-data"
+                  component={PersonalData}
+                />
+                <PrivateRoute
+                  exact
+                  path="/personal-data/:personalDatumId"
+                  component={PersonalDatum}
+                />
+                <PrivateRoute exact path="/users" component={Profiles} />
                 <PrivateRoute exact path="/questions" component={Questions} />
                 <PrivateRoute
                   exact

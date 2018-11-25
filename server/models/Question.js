@@ -9,7 +9,10 @@ const QuestionSchema = new Schema({
   },
   answers: [
     {
-      body: String
+      body: {
+        type: String,
+        maxlength: 255
+      }
     }
   ]
 });

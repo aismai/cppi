@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -30,22 +30,28 @@ class Landing extends Component {
           <div className="logo" />
           <Menu theme="light" mode="inline" style={{ borderRight: "none" }}>
             <Menu.Item key="1">
-              <Link to="/dashboard">
+              <NavLink to="/dashboard">
                 <Icon type="dashboard" theme="outlined" />
                 <span>Dashboard</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to="/users">
-                <Icon type="user" theme="outlined" />
-                <span>Users</span>
-              </Link>
+              <NavLink to="/personal-data">
+                <Icon type="folder-open" theme="outlined" />
+                <span>Personal Data</span>
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link to="/questions">
+              <NavLink to="/users">
+                <Icon type="user" theme="outlined" />
+                <span>Users</span>
+              </NavLink>
+            </Menu.Item>
+            <Menu.Item key="4">
+              <NavLink to="/questions">
                 <Icon type="file-unknown" theme="outlined" />
                 <span>Survey Questions</span>
-              </Link>
+              </NavLink>
             </Menu.Item>
           </Menu>
         </Sider>
