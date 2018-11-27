@@ -1,52 +1,46 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  getQuestionList,
-  deleteQuestions
-} from "../../actions/questionActions";
+import { getSurveyList, deleteSurveys } from "../../actions/surveyActions";
 
-import QuestionForm from "./QuestionForm/QuestionForm";
+import SurveyConfig from "./SurveyConfig/SurveyConfig";
 
 import { Table, Row, Col, Button, Icon } from "antd";
 
 const columns = [
   {
-    title: "Question",
-    dataIndex: "body",
-    render: (text, record) => (
-      <Link to={`/questions/${record._id}`}>{text}</Link>
-    )
+    title: "Название Формы",
+    dataIndex: "name",
+    render: (text, record) => <Link to={`/surveys/${record._id}`}>{text}</Link>
   },
   {
-    title: "Варианты ответов",
-    dataIndex: "answers",
+    title: "Количество вопросов",
+    dataIndex: "questions",
     render: (text, record) => text.length
   }
 ];
 
-class Questions extends Component {
+class Surveys extends Component {
   state = {
     showForm: false,
     selectedRowKeys: []
   };
 
   componentDidMount = () => {
-    this.props.getQuestionList();
+    this.props.getSurveyList();
   };
 
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys });
   };
 
-  onClickDeleteQuestion = () => {
+  onClickDeleteSurvey = () => {
     const { selectedRowKeys } = this.state;
-    this.props.deleteQuestions(selectedRowKeys);
+    this.props.deleteSurveys(selectedRowKeys);
     this.setState({ selectedRowKeys: [] });
   };
 
-  toggleAddQuestion = () => {
+  toggleAddSurvey = () => {
     this.setState({ showForm: !this.state.showForm });
   };
 
@@ -61,12 +55,12 @@ class Questions extends Component {
             <Button
               type="danger"
               disabled={!this.state.selectedRowKeys.length}
-              onClick={this.onClickDeleteQuestion}
+              onClick={this.onClickDeleteSurvey}
             >
               <Icon type="delete" theme="outlined" />
             </Button>
           ) : (
-            <Button onClick={this.toggleAddQuestion}>
+            <Button onClick={this.toggleAddSurvey}>
               <Icon type="plus-circle" theme="outlined" />
             </Button>
           )}
@@ -83,7 +77,7 @@ class Questions extends Component {
   );
 
   render() {
-    const data = this.props.questions;
+    const data = this.props.surveys;
     const { selectedRowKeys } = this.state;
 
     const rowSelection = {
@@ -93,30 +87,22 @@ class Questions extends Component {
 
     return (
       <>
-        <QuestionForm
-          title="Create Question"
-          visible={this.state.showForm}
-          closeDrawer={this.toggleAddQuestion}
-        />
         {this.renderTable(data, rowSelection)}
+        <SurveyConfig
+          title="Настроить Форму"
+          visible={this.state.showForm}
+          closeDrawer={this.toggleAddSurvey}
+        />
       </>
     );
   }
 }
 
-Questions.propTypes = {
-  questions: PropTypes.array,
-  getQuestionList: PropTypes.func.isRequired
-};
-
 const mapStateToProps = state => ({
-  questions: state.questions.questionList
+  surveys: state.surveys.surveyList
 });
 
 export default connect(
   mapStateToProps,
-  {
-    getQuestionList,
-    deleteQuestions
-  }
-)(Questions);
+  { getSurveyList, deleteSurveys }
+)(Surveys);

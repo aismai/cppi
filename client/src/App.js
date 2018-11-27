@@ -17,6 +17,8 @@ import Questions from "./components/Questions/Questions";
 import Question from "./components/Questions/Question/Question";
 import PersonalData from "./components/PersonalData/PersonalData";
 import PersonalDatum from "./components/PersonalData/PersonalDatum/PersonalDatum";
+import Surveys from "./components/Surveys/Surveys";
+import Survey from "./components/Surveys/Survey/Survey";
 
 import "./App.css";
 import "antd/dist/antd.css";
@@ -69,6 +71,12 @@ class App extends Component {
                   exact
                   path="/questions/:questionId"
                   component={Question}
+                />
+                <PrivateRoute exact path="/surveys" component={Surveys} />
+                <PrivateRoute
+                  exact
+                  path="/surveys/:surveyId"
+                  component={Survey}
                 />
               </Landing>
             </Switch>

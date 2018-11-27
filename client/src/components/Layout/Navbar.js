@@ -27,10 +27,10 @@ class Navbar extends Component {
         />
         <div
           className="rightWrapper"
-          style={{ float: "right", paddingRight: "25px" }}
+          style={{ float: "right", paddingRight: "55px" }}
         >
           <span onClick={this.logOut} style={{ cursor: "pointer" }}>
-            Logout
+            <Icon type="logout" />
           </span>
         </div>
       </Header>

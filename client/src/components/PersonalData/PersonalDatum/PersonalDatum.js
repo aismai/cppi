@@ -33,14 +33,6 @@ const booleanValueMap = {
   }
 };
 
-const customPanelStyle = {
-  background: "#f7f7f7",
-  borderRadius: 4,
-  marginBottom: 24,
-  border: 0,
-  overflow: "hidden"
-};
-
 class PersonalDatum extends Component {
   state = {
     showForm: false

@@ -9,6 +9,7 @@ const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const questions = require("./routes/api/questions");
 const personalData = require("./routes/api/personalData");
+const surveys = require("./routes/api/surveys");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/questions", questions);
 app.use("/api/personal-data", personalData);
+app.use("/api/surveys", surveys);
 
 const port = process.env.PORT || 5000;
 

@@ -54,7 +54,11 @@ class PersonalDataForm extends Component {
   };
 
   renderSelectOptions = optionsList =>
-    optionsList.map(option => <Option value={option}>{option}</Option>);
+    optionsList.map(option => (
+      <Option value={option} key={option}>
+        {option}
+      </Option>
+    ));
 
   render() {
     const { getFieldDecorator } = this.props.form;

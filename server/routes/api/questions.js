@@ -78,7 +78,7 @@ router.put(
 
         res.json(question);
       })
-      .catch(err => res.status(404).json(err));
+      .catch(err => res.status(400).json(err));
   }
 );
 

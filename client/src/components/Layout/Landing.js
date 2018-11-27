@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import { Link, NavLink } from "react-router-dom";
+import { Layout, Menu, Icon } from "antd";
+import { NavLink } from "react-router-dom";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -48,8 +48,14 @@ class Landing extends Component {
               </NavLink>
             </Menu.Item>
             <Menu.Item key="4">
+              <NavLink to="/surveys">
+                <Icon type="setting" theme="outlined" />
+                <span>Surveys</span>
+              </NavLink>
+            </Menu.Item>
+            <Menu.Item key="5">
               <NavLink to="/questions">
-                <Icon type="file-unknown" theme="outlined" />
+                <Icon type="question-circle" theme="outlined" />
                 <span>Survey Questions</span>
               </NavLink>
             </Menu.Item>
