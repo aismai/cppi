@@ -30,7 +30,7 @@ class SurveyConfig extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        survey ? this.updateSurvey(values) : this.createSurvey(values);
+        survey ? this.updateSurvey(values) : this.createNewSurvey(values);
 
         this.props.closeDrawer();
       }
