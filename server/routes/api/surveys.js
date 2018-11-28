@@ -129,8 +129,13 @@ router.post(
     const newSurvey = new Survey(req.body);
     newSurvey.save((err, doc) => {
       if (err) return res.json(err);
-
-      res.status(201).json(doc);
+      const surveyPrototypeId = doc.surveyPrototype;
+      SurveyPrototype.findOne({ _id: surveyPrototypeId })
+        .populate("questions")
+        .then(proto => {
+          doc.surveyPrototype = proto;
+          res.status(201).json(doc);
+        });
     });
   }
 );

@@ -38,9 +38,14 @@ class SurveyConfig extends Component {
   };
 
   createNewSurvey = values => {
-    const questionIds = this.state.checkedList;
+    const { survey, questions } = this.props;
     const newSurvey = { ...values };
-    newSurvey.questionIds = questionIds;
+
+    const selectedQuestions = questions
+      .filter((question, index) => values.questions[index])
+      .map(question => question._id);
+
+    newSurvey.questionIds = selectedQuestions;
 
     this.props.createSurvey(newSurvey);
   };

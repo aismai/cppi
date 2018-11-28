@@ -143,6 +143,7 @@ class PersonalDatum extends Component {
   renderFilledSurveys = () => {
     const { filledSurveys } = this.props;
 
+    console.log("filled surveys", filledSurveys);
     return filledSurveys
       ? filledSurveys.map(filledSurvey => {
           return (

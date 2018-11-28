@@ -57,8 +57,6 @@ class SurveyForm extends Component {
             });
           });
 
-          console.log("updated survey", updatedSurvey);
-
           this.props.updateFilledSurveyForm(updatedSurvey);
         } else {
           const newSurvey = {
@@ -76,7 +74,6 @@ class SurveyForm extends Component {
             });
           });
 
-          console.log("[NEW SURVEY]", newSurvey);
           this.props.fillSurveyForm(newSurvey);
         }
 
