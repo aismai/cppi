@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPersonalDatum } from "../../../actions/personalDataActions";
+import {
+  getPersonalDatum,
+  findSurveyByPersonalDataId
+} from "../../../actions/personalDataActions";
+import { getSurveyList } from "../../../actions/surveyActions";
 
 import PersonalDataForm from "../PersonalDataForm/PersonalDataForm";
-import { Card, Button, Icon, List, Collapse } from "antd";
+import SurveyForm from "../../Surveys/SurveyForm/SurveyForm";
+
+import { Card, Button, Icon, List, Collapse, Tag } from "antd";
 
 const Panel = Collapse.Panel;
 
@@ -35,13 +41,17 @@ const booleanValueMap = {
 
 class PersonalDatum extends Component {
   state = {
-    showForm: false
+    showForm: false,
+    showSurveyForm: false,
+    survey: null
   };
 
   componentDidMount() {
     const { personalDatumId } = this.props.match.params;
     console.log();
     this.props.getPersonalDatum(personalDatumId);
+    this.props.findSurveyByPersonalDataId(personalDatumId);
+    this.props.getSurveyList();
   }
 
   transformData = data => {
@@ -68,6 +78,19 @@ class PersonalDatum extends Component {
   toggleEditDatum = () => {
     this.setState({
       showForm: !this.state.showForm
+    });
+  };
+
+  closeSurveyForm = () => {
+    this.setState({
+      showSurveyForm: false
+    });
+  };
+
+  fillSurvey = survey => {
+    this.setState({
+      survey,
+      showSurveyForm: true
     });
   };
 
@@ -106,11 +129,60 @@ class PersonalDatum extends Component {
         visible={this.state.showForm}
         closeDrawer={this.toggleEditDatum}
       />
+      {this.renderFilledSurveys()}
+      {this.renderSurveys()}
+      <SurveyForm
+        survey={this.state.survey}
+        personalData={datum}
+        visible={this.state.showSurveyForm}
+        closeDrawer={this.closeSurveyForm}
+      />
     </Card>
   );
 
+  renderFilledSurveys = () => {
+    const { filledSurveys } = this.props;
+
+    return filledSurveys
+      ? filledSurveys.map(filledSurvey => {
+          return (
+            <div
+              key={filledSurvey._id}
+              onClick={() => this.fillSurvey(filledSurvey)}
+              style={{ marginTop: "20px", cursor: "pointer" }}
+            >
+              {filledSurvey.surveyPrototype.name} (заполнена)
+            </div>
+          );
+        })
+      : null;
+  };
+
+  renderSurveys = () => {
+    const { filledSurveys, surveys } = this.props;
+    const filledSurveysIds = filledSurveys.map(
+      filledSurvey => filledSurvey.surveyPrototype._id
+    );
+    const activeSurveysList = surveys.filter(
+      survey => !filledSurveysIds.includes(survey._id)
+    );
+
+    return activeSurveysList.map(survey => (
+      <div
+        key={survey._id}
+        onClick={() => this.fillSurvey(survey)}
+        style={{ marginTop: "20px", cursor: "pointer" }}
+      >
+        {survey.name}
+      </div>
+    ));
+  };
+
   render() {
-    return this.props.datum ? (
+    const dataIsLoaded =
+      this.props.datum && this.props.filledSurveys && this.props.surveys;
+
+    return dataIsLoaded ? (
       this.renderDatum(this.props.datum)
     ) : (
       <div>Loading...</div>
@@ -119,10 +191,12 @@ class PersonalDatum extends Component {
 }
 
 const mapStateToProps = state => ({
-  datum: state.personalData.datum
+  datum: state.personalData.datum,
+  filledSurveys: state.surveys.filledSurveys,
+  surveys: state.surveys.surveyList
 });
 
 export default connect(
   mapStateToProps,
-  { getPersonalDatum }
+  { getPersonalDatum, findSurveyByPersonalDataId, getSurveyList }
 )(PersonalDatum);

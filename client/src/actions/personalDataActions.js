@@ -5,7 +5,8 @@ import {
   UPDATE_PERSONAL_DATA,
   GET_PERSONAL_DATUM,
   DELETE_PERSONAL_DATA,
-  GET_ERRORS
+  GET_ERRORS,
+  FIND_SURVEY_BY_DATA_ID
 } from "./types";
 
 export const getPersonalData = () => dispatch => {
@@ -75,4 +76,21 @@ export const deletePersonalData = dataIds => dispatch => {
   axios
     .post("/api/personal-data/delete", { dataIds })
     .then(res => dispatch({ type: DELETE_PERSONAL_DATA, payload: dataIds }));
+};
+
+export const findSurveyByPersonalDataId = personalDatumId => dispatch => {
+  axios
+    .get(`/api/surveys/filled-in/${personalDatumId}`)
+    .then(res =>
+      dispatch({
+        type: FIND_SURVEY_BY_DATA_ID,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ALL_PERSONAL_DATA,
+        payload: null
+      })
+    );
 };

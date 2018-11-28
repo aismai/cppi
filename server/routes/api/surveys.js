@@ -5,6 +5,7 @@ const passport = require("passport");
 const router = express.Router();
 
 const SurveyPrototype = require("../../models/SurveyPrototype");
+const Survey = require("../../models/Survey");
 
 // @route  GET api/surveys
 // @desc   Get all surveys
@@ -15,14 +16,23 @@ router.get(
   (req, res) => {
     const errors = {};
 
-    SurveyPrototype.find().then(prototypes => {
-      if (!prototypes) {
-        errors.nosurveys = "There are no surveys";
-        res.status(404).json({ errors });
-      }
+    SurveyPrototype.find()
+      .populate({
+        path: "questions",
+        select: "body",
+        populate: {
+          path: "answers",
+          select: "body"
+        }
+      })
+      .then(prototypes => {
+        if (!prototypes) {
+          errors.nosurveys = "There are no surveys";
+          res.status(404).json({ errors });
+        }
 
-      res.json(prototypes);
-    });
+        res.json(prototypes);
+      });
   }
 );
 
@@ -105,6 +115,110 @@ router.post(
     SurveyPrototype.remove({ _id: { $in: surveyIds } })
       .then(() => res.json({ success: true }))
       .catch(err => res.status(404).json(err));
+  }
+);
+
+// todo: extract filled surveys routes to own namespace
+// @route  POST api/surveys/fill-in-survey
+// @desc   Create survey
+// @access Private
+router.post(
+  "/fill-in-survey",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const newSurvey = new Survey(req.body);
+    newSurvey.save((err, doc) => {
+      if (err) return res.json(err);
+
+      res.status(201).json(doc);
+    });
+  }
+);
+
+// @route  GET api/surveys/filled-in-surveys
+// @desc   Get all filled in surveys
+// @access Private
+router.get(
+  "/get/filled-in-surveys",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Survey.find().then(surveys => {
+      if (!surveys) {
+        errors.nosurveys = "There are no surveys";
+        res.status(404).json({ errors });
+      }
+
+      res.json(surveys);
+    });
+  }
+);
+
+// @route  GET api/surveys/filled-in/:personal_data_id
+// @desc   Get all filled in surveys
+// @access Private
+router.get(
+  "/filled-in/:personal_data_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    const datumId = mongoose.Types.ObjectId(req.params.personal_data_id);
+    Survey.find({ person: datumId })
+      .populate({
+        path: "surveyPrototype",
+        select: "name",
+        populate: {
+          path: "questions",
+          select: "body",
+          populate: {
+            path: "answers",
+            select: "body"
+          }
+        }
+      })
+      .then(survey => {
+        if (!survey) {
+          errors.nosurvey = "There are no surveys";
+          res.status(404).json({ errors });
+        }
+
+        res.json(survey);
+      });
+  }
+);
+
+router.put(
+  "/update/filled-survey",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    const surveyId = mongoose.Types.ObjectId(req.body._id);
+    Survey.findOneAndUpdate({ _id: surveyId }, req.body, {
+      new: true
+    })
+      .populate({
+        path: "surveyPrototype",
+        select: "name",
+        populate: {
+          path: "questions",
+          select: "body",
+          populate: {
+            path: "answers",
+            select: "body"
+          }
+        }
+      })
+      .then(survey => {
+        if (!survey) {
+          errors.nosurvey = "There is no survey";
+          res.status(404).json({ errors });
+        }
+
+        res.json(survey);
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 

@@ -86,7 +86,7 @@ class PersonalDataForm extends Component {
           </Row>
           <Row gutter={8}>
             <Col span={8}>
-              <FormItem label="Дата регистрации">
+              <FormItem label="Дата нарушения">
                 {getFieldDecorator("registrationDate", {
                   rules: [
                     {

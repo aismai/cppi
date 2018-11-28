@@ -3,7 +3,10 @@ import {
   CREATE_SURVEY,
   DELETE_SURVEYS,
   GET_SURVEY,
-  UPDATE_SURVEY
+  UPDATE_SURVEY,
+  FIND_SURVEY_BY_DATA_ID,
+  FILL_IN_SURVEY,
+  UPDATE_FILLED_SURVEY_FORM
 } from "../actions/types";
 
 const initialState = {};
@@ -35,6 +38,25 @@ export default (state = initialState, action) => {
           ...action.payload,
           questions: Object.assign([...action.payload.questions])
         }
+      };
+
+    case FIND_SURVEY_BY_DATA_ID:
+      return {
+        ...state,
+        filledSurveys: action.payload
+      };
+
+    case FILL_IN_SURVEY:
+      console.log("[REDUCER]", action.payload);
+      return {
+        ...state,
+        filledSurveys: [...state.filledSurveys, action.payload]
+      };
+
+    case UPDATE_FILLED_SURVEY_FORM:
+      return {
+        ...state,
+        filledSurveys: [...state.filledSurveys]
       };
     case DELETE_SURVEYS:
       return {

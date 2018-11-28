@@ -5,7 +5,9 @@ import {
   DELETE_SURVEYS,
   GET_ERRORS,
   GET_SURVEY,
-  UPDATE_SURVEY
+  UPDATE_SURVEY,
+  FILL_IN_SURVEY,
+  UPDATE_FILLED_SURVEY_FORM
 } from "./types";
 
 export const getSurveyList = () => dispatch => {
@@ -83,4 +85,33 @@ export const deleteSurveys = surveyIds => dispatch => {
       payload: surveyIds
     })
   );
+};
+
+export const fillSurveyForm = survey => dispatch => {
+  axios
+    .post("/api/surveys/fill-in-survey", survey)
+    .then(res => {
+      return dispatch({
+        type: FILL_IN_SURVEY,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+    );
+};
+
+export const updateFilledSurveyForm = updatedSurvey => dispatch => {
+  axios
+    .put(`/api/surveys/update/filled-survey`, updatedSurvey)
+    .then(res =>
+      dispatch({
+        type: UPDATE_FILLED_SURVEY_FORM,
+        payload: res.payload
+      })
+    )
+    .catch(err => console.log(err));
 };
