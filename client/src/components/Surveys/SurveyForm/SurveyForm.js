@@ -27,6 +27,7 @@ import locale from "antd/lib/date-picker/locale/ru_RU";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TextArea = Input.TextArea;
+const CheckboxGroup = Checkbox.Group;
 
 const dateFormat = "DD/MM/YYYY";
 
@@ -42,20 +43,14 @@ class SurveyForm extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const surveyQuestions = this.props.survey.surveyPrototype
-          ? this.props.survey.surveyPrototype.questions
-          : this.props.survey.questions;
-
         if (survey.surveyPrototype) {
-          const updatedSurvey = { ...survey, ...values, selectedAnswers: [] };
-
-          surveyQuestions.map(question => {
-            question.answers.map(answer => {
-              if (values.answers[answer._id]) {
-                updatedSurvey.selectedAnswers.push(answer);
-              }
-            });
-          });
+          const updatedSurvey = {
+            ...survey,
+            ...values,
+            selectedAnswers: values.answers.map(answer => ({
+              answerId: answer
+            }))
+          };
 
           this.props.updateFilledSurveyForm(updatedSurvey);
         } else {
@@ -63,21 +58,11 @@ class SurveyForm extends Component {
             person: personalData._id,
             surveyPrototype: survey._id,
             ...values,
-            selectedAnswers: []
+            selectedAnswers: values.answers.map(answerId => ({ answerId }))
           };
-
-          surveyQuestions.map(question => {
-            question.answers.map(answer => {
-              if (values.answers[answer._id]) {
-                newSurvey.selectedAnswers.push(answer);
-              }
-            });
-          });
 
           this.props.fillSurveyForm(newSurvey);
         }
-
-        // survey ? this.updateSurvey(values) : this.createSurvey(values);
 
         this.props.closeDrawer();
       }
@@ -108,36 +93,22 @@ class SurveyForm extends Component {
       ? survey.surveyPrototype.questions
       : survey.questions;
 
-    const selectedAnswers = survey.selectedAnswers
-      ? survey.selectedAnswers.map(answer => answer._id)
-      : [];
-
-    return surveyQuestions.map((question, index) => (
-      <FormItem label={question.body} key={question._id}>
-        <div>
-          {question.answers.map((answer, i) =>
-            getFieldDecorator(`answers[${answer._id}]`, {
-              valuePropName: "checked",
-              initialValue: selectedAnswers.includes(answer._id)
-            })(<Checkbox key={answer._id}>{answer.body}</Checkbox>)
+    return surveyQuestions.map((question, index) => {
+      const answersOptions = [];
+      question.answers.map(answer =>
+        answersOptions.push({
+          label: answer.body,
+          value: answer._id
+        })
+      );
+      return (
+        <FormItem label={question.body} key={question._id}>
+          {getFieldDecorator(`answers`)(
+            <CheckboxGroup options={answersOptions} />
           )}
-        </div>
-      </FormItem>
-    ));
-
-    //   <div key={question._id} style={{ paddingBottom: "20px" }}>
-    //   <div style={{ paddingBottom: "15px" }}>{question.body}:</div>
-    //   <Checkbox.Group
-    //     style={{ width: "100%" }}
-    //     onChange={value => this.setState({ checkedList: value })}
-    //   >
-    //     {question.answers.map((answer, i) => (
-    //       <div key={answer._id}>
-    //         <Checkbox value={answer._id}>{answer.body}</Checkbox>
-    //       </div>
-    //     ))}
-    //   </Checkbox.Group>
-    // </div>
+        </FormItem>
+      );
+    });
   };
 
   render() {
@@ -305,7 +276,8 @@ export default connect(
       const { survey } = props;
       const surveyFields = {};
 
-      if (!survey) {
+      console.log(survey);
+      if (!survey.surveyPrototype) {
         return surveyFields;
       }
 
@@ -319,6 +291,10 @@ export default connect(
       surveyFields.date = Form.createFormField({
         ...survey.date,
         value: moment(moment(survey.date).format(dateFormat), dateFormat)
+      });
+
+      surveyFields.answers = Form.createFormField({
+        value: survey.selectedAnswers.map(answer => answer.answerId)
       });
 
       return surveyFields;

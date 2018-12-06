@@ -112,8 +112,12 @@ router.post(
   (req, res) => {
     const surveyIds = req.body.surveyIds.map(mongoose.Types.ObjectId);
 
-    SurveyPrototype.remove({ _id: { $in: surveyIds } })
-      .then(() => res.json({ success: true }))
+    SurveyPrototype.deleteMany({ _id: { $in: surveyIds } })
+      .then(() =>
+        Survey.deleteMany({ surveyPrototype: { $in: surveyIds } }).then(() => {
+          res.json({ success: true });
+        })
+      )
       .catch(err => res.status(404).json(err));
   }
 );
@@ -131,7 +135,14 @@ router.post(
       if (err) return res.json(err);
       const surveyPrototypeId = doc.surveyPrototype;
       SurveyPrototype.findOne({ _id: surveyPrototypeId })
-        .populate("questions")
+        .populate({
+          path: "questions",
+          select: "body",
+          populate: {
+            path: "answers",
+            select: "body"
+          }
+        })
         .then(proto => {
           doc.surveyPrototype = proto;
           res.status(201).json(doc);

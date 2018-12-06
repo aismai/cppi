@@ -56,13 +56,8 @@ const SurveySchema = new Schema({
 
   selectedAnswers: [
     {
-      body: {
-        type: String,
-        maxlength: 255
-      },
-      questionId: {
-        type: Schema.Types.ObjectId,
-        ref: "Question"
+      answerId: {
+        type: String
       }
     }
   ]

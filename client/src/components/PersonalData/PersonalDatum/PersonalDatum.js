@@ -116,7 +116,6 @@ class PersonalDatum extends Component {
                   title={item.title}
                   description={item.description}
                 />
-                {/* <div style={{ paddingRight: "10px" }}>{item.description}</div> */}
               </List.Item>
             )}
           />
@@ -131,19 +130,20 @@ class PersonalDatum extends Component {
       />
       {this.renderFilledSurveys()}
       {this.renderSurveys()}
-      <SurveyForm
-        survey={this.state.survey}
-        personalData={datum}
-        visible={this.state.showSurveyForm}
-        closeDrawer={this.closeSurveyForm}
-      />
+      {this.state.survey ? (
+        <SurveyForm
+          survey={this.state.survey}
+          personalData={datum}
+          visible={this.state.showSurveyForm}
+          closeDrawer={this.closeSurveyForm}
+        />
+      ) : null}
     </Card>
   );
 
   renderFilledSurveys = () => {
     const { filledSurveys } = this.props;
 
-    console.log("filled surveys", filledSurveys);
     return filledSurveys
       ? filledSurveys.map(filledSurvey => {
           return (

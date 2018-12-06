@@ -49,13 +49,13 @@ class Landing extends Component {
             </Menu.Item>
             <Menu.Item key="4">
               <NavLink to="/surveys">
-                <Icon type="setting" theme="outlined" />
+                <Icon type="form" theme="outlined" />
                 <span>Surveys</span>
               </NavLink>
             </Menu.Item>
             <Menu.Item key="5">
               <NavLink to="/questions">
-                <Icon type="question-circle" theme="outlined" />
+                <Icon type="file-unknown" theme="outlined" />
                 <span>Survey Questions</span>
               </NavLink>
             </Menu.Item>

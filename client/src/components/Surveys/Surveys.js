@@ -89,7 +89,7 @@ class Surveys extends Component {
       <>
         {this.renderTable(data, rowSelection)}
         <SurveyConfig
-          title="Настроить Форму"
+          title="Создать Новый Опрос"
           visible={this.state.showForm}
           closeDrawer={this.toggleAddSurvey}
         />

@@ -38,7 +38,7 @@ class SurveyConfig extends Component {
   };
 
   createNewSurvey = values => {
-    const { survey, questions } = this.props;
+    const { questions } = this.props;
     const newSurvey = { ...values };
 
     const selectedQuestions = questions

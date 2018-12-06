@@ -5,10 +5,13 @@ import rootReducer from "./reducers";
 const initialState = {};
 const middleware = [thunk];
 
+// disable Redux plugin for chrome in production
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
   rootReducer,
   initialState,
-  compose(applyMiddleware(...middleware))
+  composeEnhancers(applyMiddleware(...middleware))
 );
 
 export default store;

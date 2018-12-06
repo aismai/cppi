@@ -110,7 +110,7 @@ export const updateFilledSurveyForm = updatedSurvey => dispatch => {
     .then(res =>
       dispatch({
         type: UPDATE_FILLED_SURVEY_FORM,
-        payload: res.payload
+        payload: res.data
       })
     )
     .catch(err => console.log(err));

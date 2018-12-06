@@ -47,7 +47,6 @@ export default (state = initialState, action) => {
       };
 
     case FILL_IN_SURVEY:
-      console.log("[REDUCER]", action.payload);
       return {
         ...state,
         filledSurveys: [...state.filledSurveys, action.payload]
@@ -56,7 +55,9 @@ export default (state = initialState, action) => {
     case UPDATE_FILLED_SURVEY_FORM:
       return {
         ...state,
-        filledSurveys: [...state.filledSurveys]
+        filledSurveys: state.filledSurveys
+          .filter(survey => survey._id !== action.payload._id)
+          .concat([action.payload])
       };
     case DELETE_SURVEYS:
       return {
