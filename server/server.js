@@ -11,6 +11,8 @@ const profile = require("./routes/api/profile");
 const questions = require("./routes/api/questions");
 const personalData = require("./routes/api/personalData");
 const surveys = require("./routes/api/surveys");
+const surveyPrototypes = require("./routes/api/surveyPrototypes");
+const stats = require("./routes/api/stats");
 
 const app = express();
 
@@ -40,6 +42,8 @@ app.use("/api/profile", profile);
 app.use("/api/questions", questions);
 app.use("/api/personal-data", personalData);
 app.use("/api/surveys", surveys);
+app.use("/api/survey-prototypes", surveyPrototypes);
+app.use("/api/stats", stats);
 
 console.log(path.resolve(__dirname, "client", "build", "index.html"));
 // Serve static assets if in production

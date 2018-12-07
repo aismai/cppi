@@ -9,7 +9,7 @@ import { getSurveyList } from "../../../actions/surveyActions";
 import PersonalDataForm from "../PersonalDataForm/PersonalDataForm";
 import SurveyForm from "../../Surveys/SurveyForm/SurveyForm";
 
-import { Card, Button, Icon, List, Collapse, Tag } from "antd";
+import { Card, Button, Icon, List, Collapse } from "antd";
 
 const Panel = Collapse.Panel;
 

@@ -276,7 +276,6 @@ export default connect(
       const { survey } = props;
       const surveyFields = {};
 
-      console.log(survey);
       if (!survey.surveyPrototype) {
         return surveyFields;
       }

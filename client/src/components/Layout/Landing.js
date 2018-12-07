@@ -19,6 +19,8 @@ class Landing extends Component {
   };
 
   render() {
+    //todo:  break into seperate components, remove content and side menu
+
     return (
       <Layout>
         <Sider
@@ -32,31 +34,31 @@ class Landing extends Component {
             <Menu.Item key="1">
               <NavLink to="/dashboard">
                 <Icon type="dashboard" theme="outlined" />
-                <span>Dashboard</span>
+                <span>Статистика</span>
               </NavLink>
             </Menu.Item>
             <Menu.Item key="2">
               <NavLink to="/personal-data">
                 <Icon type="folder-open" theme="outlined" />
-                <span>Personal Data</span>
+                <span>Анкетные Данные</span>
               </NavLink>
             </Menu.Item>
             <Menu.Item key="3">
-              <NavLink to="/users">
-                <Icon type="user" theme="outlined" />
-                <span>Users</span>
+              <NavLink to="/surveys">
+                <Icon type="form" theme="outlined" />
+                <span>Формы</span>
               </NavLink>
             </Menu.Item>
             <Menu.Item key="4">
-              <NavLink to="/surveys">
-                <Icon type="form" theme="outlined" />
-                <span>Surveys</span>
+              <NavLink to="/questions">
+                <Icon type="file-unknown" theme="outlined" />
+                <span>Вопросы</span>
               </NavLink>
             </Menu.Item>
             <Menu.Item key="5">
-              <NavLink to="/questions">
-                <Icon type="file-unknown" theme="outlined" />
-                <span>Survey Questions</span>
+              <NavLink to="/users">
+                <Icon type="user" theme="outlined" />
+                <span>Пользователи</span>
               </NavLink>
             </Menu.Item>
           </Menu>
@@ -71,6 +73,7 @@ class Landing extends Component {
               </Breadcrumb.Item>
             </Breadcrumb>
           </div> */}
+
           <Content
             style={{
               margin: "24px 16px",

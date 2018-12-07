@@ -80,7 +80,7 @@ export const deletePersonalData = dataIds => dispatch => {
 
 export const findSurveyByPersonalDataId = personalDatumId => dispatch => {
   axios
-    .get(`/api/surveys/filled-in/${personalDatumId}`)
+    .get(`/api/surveys/${personalDatumId}`)
     .then(res =>
       dispatch({
         type: FIND_SURVEY_BY_DATA_ID,

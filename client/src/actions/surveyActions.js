@@ -7,12 +7,14 @@ import {
   GET_SURVEY,
   UPDATE_SURVEY,
   FILL_IN_SURVEY,
-  UPDATE_FILLED_SURVEY_FORM
+  UPDATE_FILLED_SURVEY_FORM,
+  GET_FILLED_SURVEYS,
+  GET_STATS
 } from "./types";
 
 export const getSurveyList = () => dispatch => {
   axios
-    .get("/api/surveys")
+    .get("/api/survey-prototypes")
     .then(res =>
       dispatch({
         type: GET_SURVEYS,
@@ -29,7 +31,7 @@ export const getSurveyList = () => dispatch => {
 
 export const createSurvey = newSurvey => dispatch => {
   axios
-    .post("/api/surveys", newSurvey)
+    .post("/api/survey-prototypes", newSurvey)
     .then(res =>
       dispatch({
         type: CREATE_SURVEY,
@@ -46,7 +48,7 @@ export const createSurvey = newSurvey => dispatch => {
 
 export const getSurvey = surveyId => dispatch => {
   axios
-    .get(`/api/surveys/${surveyId}`)
+    .get(`/api/survey-prototypes/${surveyId}`)
     .then(res =>
       dispatch({
         type: GET_SURVEY,
@@ -63,7 +65,7 @@ export const getSurvey = surveyId => dispatch => {
 
 export const updateSurvey = survey => dispatch => {
   axios
-    .put(`/api/surveys/${survey._id}`, survey)
+    .put(`/api/survey-prototypes/${survey._id}`, survey)
     .then(res =>
       dispatch({
         type: UPDATE_SURVEY,
@@ -79,7 +81,7 @@ export const updateSurvey = survey => dispatch => {
 };
 
 export const deleteSurveys = surveyIds => dispatch => {
-  axios.post("/api/surveys/delete", { surveyIds }).then(res =>
+  axios.post("/api/survey-prototypes/delete", { surveyIds }).then(res =>
     dispatch({
       type: DELETE_SURVEYS,
       payload: surveyIds
@@ -89,7 +91,7 @@ export const deleteSurveys = surveyIds => dispatch => {
 
 export const fillSurveyForm = survey => dispatch => {
   axios
-    .post("/api/surveys/fill-in-survey", survey)
+    .post("/api/surveys", survey)
     .then(res => {
       return dispatch({
         type: FILL_IN_SURVEY,
@@ -106,7 +108,7 @@ export const fillSurveyForm = survey => dispatch => {
 
 export const updateFilledSurveyForm = updatedSurvey => dispatch => {
   axios
-    .put(`/api/surveys/update/filled-survey`, updatedSurvey)
+    .put(`/api/surveys/update`, updatedSurvey)
     .then(res =>
       dispatch({
         type: UPDATE_FILLED_SURVEY_FORM,
@@ -114,4 +116,38 @@ export const updateFilledSurveyForm = updatedSurvey => dispatch => {
       })
     )
     .catch(err => console.log(err));
+};
+
+export const getFilledSurveys = () => dispatch => {
+  axios
+    .get("/api/surveys")
+    .then(res =>
+      dispatch({
+        type: GET_FILLED_SURVEYS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_FILLED_SURVEYS,
+        payload: null
+      })
+    );
+};
+
+export const getSurveyStats = () => dispatch => {
+  axios
+    .get("/api/stats")
+    .then(res =>
+      dispatch({
+        type: GET_STATS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_STATS,
+        payload: null
+      })
+    );
 };

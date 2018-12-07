@@ -106,7 +106,7 @@ class QuestionForm extends Component {
     const keys = getFieldValue("keys");
     const questionAnswersLayout = keys.map((k, index) => {
       return (
-        <FormItem label={index === 0 ? "Answers" : ""} required key={index}>
+        <FormItem label={index === 0 ? "Ответы" : ""} required key={index}>
           {getFieldDecorator(`answers[${index}]`, {
             initialValue: k.body || "",
             validateTrigger: ["onChange", "onBlur"],
@@ -146,20 +146,18 @@ class QuestionForm extends Component {
       >
         <Form onSubmit={this.handleSubmit}>
           <FormItem
-            label="Question"
+            label="Вопрос"
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 18 }}
           >
             {getFieldDecorator("body", {
-              rules: [
-                { required: true, message: "Please input question title!" }
-              ]
+              rules: [{ required: true, message: "Пожалуйста впишите вопрос!" }]
             })(<Input />)}
           </FormItem>
           {questionAnswersLayout}
           <FormItem>
             <Button type="dashed" onClick={this.add}>
-              <Icon type="plus" /> Add answer
+              <Icon type="plus" /> Добавить Ответ
             </Button>
           </FormItem>
           <FormItem>

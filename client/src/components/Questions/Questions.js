@@ -13,7 +13,7 @@ import { Table, Row, Col, Button, Icon } from "antd";
 
 const columns = [
   {
-    title: "Question",
+    title: "Вопрос",
     dataIndex: "body",
     render: (text, record) => (
       <Link to={`/questions/${record._id}`}>{text}</Link>
@@ -94,7 +94,7 @@ class Questions extends Component {
     return (
       <>
         <QuestionForm
-          title="Create Question"
+          title="Создать Вопрос"
           visible={this.state.showForm}
           closeDrawer={this.toggleAddQuestion}
         />

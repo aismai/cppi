@@ -6,7 +6,9 @@ import {
   UPDATE_SURVEY,
   FIND_SURVEY_BY_DATA_ID,
   FILL_IN_SURVEY,
-  UPDATE_FILLED_SURVEY_FORM
+  UPDATE_FILLED_SURVEY_FORM,
+  GET_FILLED_SURVEYS,
+  GET_STATS
 } from "../actions/types";
 
 const initialState = {};
@@ -59,6 +61,19 @@ export default (state = initialState, action) => {
           .filter(survey => survey._id !== action.payload._id)
           .concat([action.payload])
       };
+
+    case GET_FILLED_SURVEYS:
+      return {
+        ...state,
+        filledSurveys: action.payload
+      };
+
+    case GET_STATS:
+      return {
+        ...state,
+        stats: action.payload
+      };
+
     case DELETE_SURVEYS:
       return {
         ...state,
