@@ -10,7 +10,8 @@ const FormItem = Form.Item;
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    errors: ""
   };
 
   componentWillReceiveProps(nextProps) {

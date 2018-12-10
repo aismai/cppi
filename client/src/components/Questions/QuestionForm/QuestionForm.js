@@ -5,7 +5,7 @@ import {
   updateQuestion
 } from "../../../actions/questionActions";
 
-import { Form, Icon, Input, Drawer, Button } from "antd";
+import { Form, Icon, Input, Drawer, Button, Checkbox } from "antd";
 
 const FormItem = Form.Item;
 let uuid = 0;
@@ -21,7 +21,7 @@ class QuestionForm extends Component {
     const { form, question } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue("keys");
-    uuid = question ? form.getFieldValue(`answers`).length : uuid;
+    uuid = question && !uuid ? form.getFieldValue(`answers`).length : uuid;
 
     const nextKeys = keys.concat(uuid);
     uuid++;
@@ -43,9 +43,17 @@ class QuestionForm extends Component {
       return;
     }
 
+    const filteredKeys = keys.filter(key => {
+      if (key._id) {
+        return key._id !== k._id;
+      }
+
+      return key !== k;
+    });
+
     // can use data-binding to set
     form.setFieldsValue({
-      keys: keys.filter(key => key !== k)
+      keys: filteredKeys
     });
   };
 
@@ -54,6 +62,8 @@ class QuestionForm extends Component {
     const { question } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        console.log(values);
+        // return;
         question
           ? this.updateQuestion(values, this.props.question)
           : this.createQuestion(values);
@@ -68,6 +78,7 @@ class QuestionForm extends Component {
     const { keys, answers } = values;
 
     updatedQuestion.body = values.body;
+    updatedQuestion.isUsedInStatistics = values.isUsedInStatistics;
 
     const editedAnswers = answers.map((answer, index) => {
       if (keys[index]._id) {
@@ -89,6 +100,7 @@ class QuestionForm extends Component {
   createQuestion = values => {
     const newQuestion = {
       body: values.body,
+      isUsedInStatistics: values.isUsedInStatistics,
       answers: values.answers.map(answer => ({ body: answer }))
     };
 
@@ -154,6 +166,17 @@ class QuestionForm extends Component {
               rules: [{ required: true, message: "Пожалуйста впишите вопрос!" }]
             })(<Input />)}
           </FormItem>
+          {/* <FormItem label="Использовать в статистике">
+            {getFieldDecorator("isUsedInStats", {
+              valuePropName: "checked"
+            })(<Checkbox />)}
+          </FormItem> */}
+
+          <FormItem>
+            {getFieldDecorator("isUsedInStatistics", {
+              valuePropName: "checked"
+            })(<Checkbox>Использовать в статистике</Checkbox>)}
+          </FormItem>
           {questionAnswersLayout}
           <FormItem>
             <Button type="dashed" onClick={this.add}>
@@ -161,11 +184,7 @@ class QuestionForm extends Component {
             </Button>
           </FormItem>
           <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={this.state.disabled}
-            >
+            <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </FormItem>
@@ -201,6 +220,10 @@ export default connect(
         body: Form.createFormField({
           ...props.question.body,
           value: props.question.body
+        }),
+        isUsedInStatistics: Form.createFormField({
+          ...props.question.isUsedInStatistics,
+          value: props.question.isUsedInStatistics
         })
       };
 

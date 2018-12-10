@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPersonalData } from "../../actions/personalDataActions";
-import { getFilledSurveys, getSurveyStats } from "../../actions/surveyActions";
+import {
+  getFilledSurveys,
+  getSurveyStats,
+  getStatsQuestions
+} from "../../actions/surveyActions";
 
 import { REGION } from "../../constants";
 
@@ -15,6 +19,7 @@ class Dashboard extends Component {
     this.props.getFilledSurveys();
     this.props.getSurveyStats();
     this.props.getPersonalData();
+    this.props.getStatsQuestions();
   }
 
   renderRegionsStats = () => {
@@ -31,7 +36,7 @@ class Dashboard extends Component {
   };
 
   renderStatistics = () => {
-    const stats = this.props.stats;
+    const { stats, questions } = this.props;
     return (
       <div>
         <Row gutter={16} style={{ paddingTop: "20px" }}>
@@ -118,16 +123,39 @@ class Dashboard extends Component {
             </div>
           </Col>
         </Row>
+        <Row gutter={16}>
+          <Col span={6} style={{ paddingTop: "20px", paddingLeft: "30px" }}>
+            {questions.map(question => (
+              <div key={question.body} style={{ paddingBottom: "10px" }}>
+                <span style={{ fontSize: "18px", paddingRight: "10px" }}>
+                  {question.body}
+                </span>
+                <div>
+                  {question.answers.map(answer => (
+                    <div key={answer.answerId}>
+                      <span style={{ fontSize: "14px", paddingRight: "10px" }}>
+                        {answer.quantity}
+                      </span>
+                      <span style={{ fontSize: "14px" }}>
+                        {answer.answerBody}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </Col>
+        </Row>
       </div>
     );
   };
 
   render() {
-    console.log(this.props.surveys);
-    console.log(this.props.data);
-
     const dataLoaded =
-      this.props.surveys && this.props.data && this.props.stats;
+      this.props.surveys &&
+      this.props.data &&
+      this.props.stats &&
+      this.props.questions;
     return dataLoaded ? this.renderStatistics() : <div>Loading...</div>;
   }
 }
@@ -135,10 +163,11 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
   surveys: state.surveys.filledSurveys,
   stats: state.surveys.stats,
+  questions: state.surveys.statsQuestions,
   data: state.personalData.data
 });
 
 export default connect(
   mapStateToProps,
-  { getPersonalData, getFilledSurveys, getSurveyStats }
+  { getPersonalData, getFilledSurveys, getSurveyStats, getStatsQuestions }
 )(Dashboard);

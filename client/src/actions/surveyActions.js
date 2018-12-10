@@ -9,7 +9,8 @@ import {
   FILL_IN_SURVEY,
   UPDATE_FILLED_SURVEY_FORM,
   GET_FILLED_SURVEYS,
-  GET_STATS
+  GET_STATS,
+  GET_STATS_QUESTIONS
 } from "./types";
 
 export const getSurveyList = () => dispatch => {
@@ -147,6 +148,23 @@ export const getSurveyStats = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_STATS,
+        payload: null
+      })
+    );
+};
+
+export const getStatsQuestions = () => dispatch => {
+  axios
+    .get("api/stats/questions")
+    .then(res =>
+      dispatch({
+        type: GET_STATS_QUESTIONS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_STATS_QUESTIONS,
         payload: null
       })
     );

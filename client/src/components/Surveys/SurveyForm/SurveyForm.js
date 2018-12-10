@@ -32,10 +32,6 @@ const CheckboxGroup = Checkbox.Group;
 const dateFormat = "DD/MM/YYYY";
 
 class SurveyForm extends Component {
-  state = {
-    checkedList: []
-  };
-
   handleSubmit = e => {
     e.preventDefault();
 
@@ -43,6 +39,9 @@ class SurveyForm extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        console.log("SURVEY", values);
+        // return;
+
         if (survey.surveyPrototype) {
           const updatedSurvey = {
             ...survey,
@@ -76,14 +75,7 @@ class SurveyForm extends Component {
       </Option>
     ));
 
-  onChange = checkedValues => {
-    console.log("checked = ", checkedValues);
-  };
-
   onClose = () => {
-    this.setState({
-      checkedList: []
-    });
     this.props.closeDrawer();
   };
 
@@ -113,12 +105,13 @@ class SurveyForm extends Component {
 
   render() {
     const dataLoaded = this.props.survey && this.props.personalData;
-
+    const surveyName =
+      this.props.survey.name || this.props.survey.surveyPrototype.name;
     const { getFieldDecorator } = this.props.form;
 
     return dataLoaded ? (
       <Drawer
-        title={`${this.props.survey.name}: ${this.props.personalData.code}`}
+        title={`${surveyName}: ${this.props.personalData.code}`}
         placement="right"
         width="60%"
         closable

@@ -8,7 +8,8 @@ import {
   FILL_IN_SURVEY,
   UPDATE_FILLED_SURVEY_FORM,
   GET_FILLED_SURVEYS,
-  GET_STATS
+  GET_STATS,
+  GET_STATS_QUESTIONS
 } from "../actions/types";
 
 const initialState = {};
@@ -72,6 +73,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         stats: action.payload
+      };
+
+    case GET_STATS_QUESTIONS:
+      return {
+        ...state,
+        statsQuestions: action.payload
       };
 
     case DELETE_SURVEYS:

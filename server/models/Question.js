@@ -14,7 +14,11 @@ const QuestionSchema = new Schema({
         maxlength: 255
       }
     }
-  ]
+  ],
+  isUsedInStatistics: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = Question = mongoose.model("Question", QuestionSchema);

@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const Survey = require("../../models/Survey");
 const PersonalData = require("../../models/PersonalData");
+const Questions = require("../../models/Question");
 
 // @route  GET api/stats
 // @desc   Get text statistics data
@@ -60,5 +61,69 @@ router.get(
     });
   }
 );
+
+//todo: refactor this asap...
+// @route  GET api/stats/questions
+// @desc   Get questions used in statistics
+// @access Private
+router.get(
+  "/questions",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const questionStatistics = [];
+    let selectedAnswers = [];
+
+    Survey.find().then(surveys => {
+      surveys.forEach(survey => {
+        selectedAnswers = [
+          ...selectedAnswers,
+          ...survey.selectedAnswers.map(answer => answer.answerId)
+        ];
+      });
+
+      Questions.find({ isUsedInStatistics: true }).then(questions => {
+        questions.forEach(question => {
+          const answeredQuestion = {
+            body: question.body,
+            answers: []
+          };
+
+          question.answers.forEach(answer => {
+            const answerId = answer._id.toHexString();
+            selectedAnswers.forEach(selectedAnswerId => {
+              if (selectedAnswerId === answerId) {
+                const array = answeredQuestion.answers.map(
+                  elem => elem.answerId
+                );
+
+                if (array.includes(answerId)) {
+                  console.log("includes");
+                  answeredQuestion.answers.forEach(answ => {
+                    if (answ.answerId === answerId) {
+                      answ.quantity = answ.quantity += 1;
+                    }
+                  });
+                } else {
+                  answeredQuestion.answers.push({
+                    answerId: answerId,
+                    answerBody: answer.body,
+                    quantity: 1
+                  });
+                }
+              }
+            });
+          });
+
+          questionStatistics.push(answeredQuestion);
+        });
+
+        res.json(questionStatistics);
+      });
+    });
+  }
+);
+
+const getDescendantProp = (obj, path) =>
+  path.split(".").reduce((acc, part) => acc && acc[part], obj);
 
 module.exports = router;
