@@ -94,8 +94,12 @@ router.post(
   (req, res) => {
     const dataIds = req.body.dataIds.map(mongoose.Types.ObjectId);
 
-    PersonalData.remove({ _id: { $in: dataIds } })
-      .then(() => res.json({ success: true }))
+    PersonalData.deleteMany({ _id: { $in: dataIds } })
+      .then(() => {
+        Survey.deleteMany({ person: { $in: dataIds } }).then(() => {
+          res.json({ success: true });
+        })
+      })
       .catch(err => res.status(404).json(err));
   }
 );

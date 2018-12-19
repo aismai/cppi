@@ -25,7 +25,8 @@ const titlesMap = {
   employment: "Занятость",
   socialStatus: "Социальный статус",
   location: "Местонахождение",
-  registration: "Наличие регистрации / Прописки по месту проживания"
+  registration: "Наличие регистрации / Прописки по месту проживания",
+  keyGroup: "Ключевая группа"
 };
 
 const booleanValueMap = {

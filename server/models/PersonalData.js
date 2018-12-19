@@ -41,18 +41,22 @@ const PersonalDataSchema = new Schema({
     type: Boolean,
     default: false
   },
+  criminalStatus: {
+    type: String
+  },
+  keyGroup: {
+    type: String
+  },
   registration: {
     type: Boolean,
     default: false
   },
   citizenship: {
     type: String,
-    required: true,
     maxlength: 255
   },
   education: {
     type: String,
-    required: true,
     maxlength: 255
   },
   nationality: {
@@ -67,7 +71,6 @@ const PersonalDataSchema = new Schema({
   },
   socialStatus: {
     type: String,
-    required: true,
     maxlength: 255
   },
   children: [
@@ -80,17 +83,14 @@ const PersonalDataSchema = new Schema({
   ],
   location: {
     type: String,
-    required: true,
     maxlength: 255
   },
   relativesPhone: {
     type: String,
-    required: true,
     maxlength: 255
   },
   lawyerPhone: {
     type: String,
-    required: true,
     maxlength: 255
   }
 });
