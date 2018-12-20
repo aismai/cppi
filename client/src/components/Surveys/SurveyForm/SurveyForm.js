@@ -5,7 +5,7 @@ import {
   updateFilledSurveyForm
 } from "../../../actions/surveyActions";
 
-import { REGION, DEPARTMENT } from "../../../constants";
+import { REGION, DEPARTMENT, PLACES } from "../../../constants";
 
 import {
   Form,
@@ -29,7 +29,7 @@ const Option = Select.Option;
 const TextArea = Input.TextArea;
 const CheckboxGroup = Checkbox.Group;
 
-const dateFormat = "DD/MM/YYYY";
+const dateFormat = "DD/MM/YYYY HH:mm:ss";
 
 class SurveyForm extends Component {
   handleSubmit = e => {
@@ -39,9 +39,6 @@ class SurveyForm extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("SURVEY", values);
-        // return;
-
         if (survey.surveyPrototype) {
           const updatedSurvey = {
             ...survey,
@@ -121,17 +118,18 @@ class SurveyForm extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Row gutter={8}>
             <Col span={10}>
-              <FormItem label="Дата регистрации">
+              <FormItem label="Дата / Время">
                 {getFieldDecorator("date", {
                   rules: [
                     {
                       type: "object",
                       required: true,
-                      message: "Please select time!"
+                      message: "Пожалуйста выберите дату"
                     }
                   ]
                 })(
                   <DatePicker
+                    showTime
                     style={{ width: "100%" }}
                     format={dateFormat}
                     locale={locale}
@@ -140,13 +138,16 @@ class SurveyForm extends Component {
               </FormItem>
             </Col>
             <Col span={14}>
-              <FormItem label="Регион">
+              <FormItem label="Область / Город">
                 {getFieldDecorator("region", {
                   rules: [
-                    { required: true, message: "Выберите регион из списка!" }
+                    {
+                      required: true,
+                      message: "Пожалуйста выберите один из вариантов"
+                    }
                   ]
                 })(
-                  <Select placeholder="Выберите регион">
+                  <Select placeholder="Выберите один из вариантов">
                     {this.renderSelectOptions(REGION)}
                   </Select>
                 )}
@@ -155,32 +156,33 @@ class SurveyForm extends Component {
           </Row>
           <Row>
             <Col>
-              <FormItem label="Село">
-                {getFieldDecorator("village", {
+              <FormItem label="Место">
+                {getFieldDecorator("place", {
                   rules: [
                     {
-                      message: "Впишите название села."
+                      required: true,
+                      message: "Пожалуйста выберите один из вариантов"
                     }
                   ]
-                })(<Input />)}
+                })(
+                  <Select placeholder="Выберите один из вариантов">
+                    {this.renderSelectOptions(PLACES)}
+                  </Select>
+                )}
               </FormItem>
             </Col>
           </Row>
           <Row>
             <Col>
-              <FormItem label="Конкретное место">
-                {getFieldDecorator("place", {
-                  rules: [
-                    {
-                      message: "Впишите название села."
-                    }
-                  ]
-                })(<Input />)}
+              <FormItem label="Уточните место задержания">
+                {getFieldDecorator("placeDescription")(
+                  <Input placeholder="Уточните место" />
+                )}
               </FormItem>
             </Col>
           </Row>
           <Row gutter={8}>
-            <Col span={12}>
+            <Col>
               <FormItem label="Ведомство">
                 {getFieldDecorator("department", {
                   rules: [
@@ -196,6 +198,24 @@ class SurveyForm extends Component {
                 )}
               </FormItem>
             </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FormItem label="Имена, клички, должность и особые приметы">
+                {getFieldDecorator("description")(
+                  <TextArea rows={4} placeholder="Впишите особые приметы" />
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col span={12}>
+              <FormItem label="Количество лиц">
+                {getFieldDecorator("numberOfPersons")(
+                  <Input placeholder="Впишите количество" />
+                )}
+              </FormItem>
+            </Col>
             <Col span={12}>
               <FormItem label="Подразделение">
                 {getFieldDecorator("subDepartment")(
@@ -204,42 +224,14 @@ class SurveyForm extends Component {
               </FormItem>
             </Col>
           </Row>
-          <Row>
-            <Col span={12}>
-              <FormItem label="Количество лиц производивших задержание">
-                {getFieldDecorator("numberOfPersons")(
-                  <Input placeholder="Впишите количество" />
-                )}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <FormItem label="Опишите подробно обстоятельства нарушения в повествовательной форме">
-                {getFieldDecorator("description")(
-                  <TextArea
-                    rows={4}
-                    placeholder="Впишите обстоятельства нарушения"
-                  />
-                )}
-              </FormItem>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <FormItem label="Опишите, получал ли респондент медицинскую помощь связанную с нарушением">
-                {getFieldDecorator("evidence")(
-                  <TextArea
-                    rows={4}
-                    placeholder="Опишите, получал ли респондент медицинскую помощь"
-                  />
-                )}
-              </FormItem>
-            </Col>
-          </Row>
           {this.renderQuestions(this.props.survey)}
-          {""}
+          <Row>
+            <Col>
+              <FormItem label="Дополнительные комментарии">
+                {getFieldDecorator(" commentary")(<TextArea rows={4} />)}
+              </FormItem>
+            </Col>
+          </Row>
           <Row>
             <Col>
               <FormItem>

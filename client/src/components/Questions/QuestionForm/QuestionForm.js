@@ -166,12 +166,6 @@ class QuestionForm extends Component {
               rules: [{ required: true, message: "Пожалуйста впишите вопрос!" }]
             })(<Input />)}
           </FormItem>
-          {/* <FormItem label="Использовать в статистике">
-            {getFieldDecorator("isUsedInStats", {
-              valuePropName: "checked"
-            })(<Checkbox />)}
-          </FormItem> */}
-
           <FormItem>
             {getFieldDecorator("isUsedInStatistics", {
               valuePropName: "checked"
@@ -184,8 +178,8 @@ class QuestionForm extends Component {
             </Button>
           </FormItem>
           <FormItem>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+              <Icon type="plus-square" />
             </Button>
           </FormItem>
         </Form>

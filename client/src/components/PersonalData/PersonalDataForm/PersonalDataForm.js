@@ -7,10 +7,7 @@ import {
 
 import {
   SOURCE,
-  SOCIAL_STATUS,
-  EDUCATION,
   EMPLOYMENT,
-  CITIZENTSHIP,
   NATIONALITY,
   CRIMINAL_STATUS,
   PERSONAL_DOCUMENT,
@@ -81,21 +78,24 @@ class PersonalDataForm extends Component {
               <FormItem label="Название дела">
                 {getFieldDecorator("caseName", {
                   rules: [
-                    { required: true, message: "Please input case name!" }
+                    {
+                      required: true,
+                      message: "Пожалуйста впишите название дела"
+                    }
                   ]
                 })(<Input placeholder="Впишите название дела" />)}
               </FormItem>
             </Col>
           </Row>
           <Row gutter={8}>
-            <Col span={8}>
+            <Col span={12}>
               <FormItem label="Дата регистрации">
                 {getFieldDecorator("registrationDate", {
                   rules: [
                     {
                       type: "object",
                       required: true,
-                      message: "Please select time!"
+                      message: "Пожалуйста выберите дату"
                     }
                   ]
                 })(
@@ -107,20 +107,41 @@ class PersonalDataForm extends Component {
                 )}
               </FormItem>
             </Col>
-            <Col span={8}>
+            <Col span={12}>
               <FormItem label="Источник информации">
                 {getFieldDecorator("source", {
                   rules: [
-                    { required: true, message: "Please select a source!" }
+                    {
+                      required: true,
+                      message: "Пожалуйста выберите источник информации"
+                    }
                   ]
                 })(
-                  <Select placeholder="Please select a source">
+                  <Select placeholder="Выберите один из вариантов">
                     {this.renderSelectOptions(SOURCE)}
                   </Select>
                 )}
               </FormItem>
             </Col>
-            <Col span={8}>
+          </Row>
+          <Row gutter={8}>
+            <Col span={12}>
+              <FormItem label="Национальность">
+                {getFieldDecorator("nationality", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста выберите национальность"
+                    }
+                  ]
+                })(
+                  <Select placeholder="Выберите один из вариантов">
+                    {this.renderSelectOptions(NATIONALITY)}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={12}>
               <FormItem label="Код респондента">
                 {getFieldDecorator("code", {
                   rules: [
@@ -133,23 +154,12 @@ class PersonalDataForm extends Component {
               </FormItem>
             </Col>
           </Row>
-          <Row gutter={8}>
-          <Col span={8}>
-          <FormItem label="Национальность">
-                {getFieldDecorator("nationality", {
-                  rules: [
-                    { required: true, message: "Пожалуйста выберите национальность!" }
-                  ]
-                })(<Select>{this.renderSelectOptions(NATIONALITY)}</Select>)}
-              </FormItem>
-          </Col>
-          </Row>
           <Row>
-          <Col span={8}>
+            <Col span={8}>
               <FormItem>
                 <FormItem label="Пол" required>
                   {getFieldDecorator("gender", {
-                    rules: [{ required: true, message: "Please select gender" }]
+                    rules: [{ required: true, message: "Выберите пол" }]
                   })(
                     <RadioGroup>
                       <Radio value="мужской">Мужской</Radio>
@@ -162,14 +172,14 @@ class PersonalDataForm extends Component {
           </Row>
 
           <Row gutter={8}>
-            <Col span={8}>
+            <Col span={12}>
               <FormItem label="Дата рождения">
                 {getFieldDecorator("dateOfBirth", {
                   rules: [
                     {
                       type: "object",
                       required: true,
-                      message: "Please select time!"
+                      message: "Пожалуйста выберите дату"
                     }
                   ]
                 })(
@@ -183,13 +193,20 @@ class PersonalDataForm extends Component {
             </Col>
           </Row>
           <Row gutter={8}>
-          <Col span={12}>
+            <Col span={12}>
               <FormItem label="Уголовная история (со слов)">
                 {getFieldDecorator("criminalStatus", {
                   rules: [
-                    { required: true, message: "Пожалуйста выберите уголовную историю" }
+                    {
+                      required: true,
+                      message: "Пожалуйста выберите уголовную историю"
+                    }
                   ]
-                })(<Select>{this.renderSelectOptions(CRIMINAL_STATUS)}</Select>)}
+                })(
+                  <Select placeholder="Выберите один из вариантов">
+                    {this.renderSelectOptions(CRIMINAL_STATUS)}
+                  </Select>
+                )}
               </FormItem>
             </Col>
             <Col span={12}>
@@ -201,7 +218,11 @@ class PersonalDataForm extends Component {
                       message: "Please input personal document"
                     }
                   ]
-                })(<Select>{this.renderSelectOptions(PERSONAL_DOCUMENT)}</Select>)}
+                })(
+                  <Select placeholder="Выберите один из вариантов">
+                    {this.renderSelectOptions(PERSONAL_DOCUMENT)}
+                  </Select>
+                )}
               </FormItem>
             </Col>
           </Row>
@@ -229,22 +250,31 @@ class PersonalDataForm extends Component {
                   rules: [
                     { required: true, message: "Пожалуйста выберите занятость" }
                   ]
-                })(<Select>{this.renderSelectOptions(EMPLOYMENT)}</Select>)}
+                })(
+                  <Select placeholder="Выберите один из вариантов">
+                    {this.renderSelectOptions(EMPLOYMENT)}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label=" Ключевая группа">
+                {getFieldDecorator("keyGroup", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста выберите ключевую группу"
+                    }
+                  ]
+                })(
+                  <Select placeholder="Выберите один из вариантов">
+                    {this.renderSelectOptions(KEY_GROUP)}
+                  </Select>
+                )}
               </FormItem>
             </Col>
           </Row>
           <Row gutter={8}>
-            <Col span={12}>
-            <FormItem label=" Ключевая группа">
-                {getFieldDecorator("keyGroup", {
-                  rules: [
-                    { required: true, message: "Пожалуйста выберите ключевую группу" }
-                  ]
-                })(<Select>{this.renderSelectOptions(KEY_GROUP)}</Select>)}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
             <Col>
               <FormItem>
                 <Button

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createSurvey, updateSurvey } from "../../../actions/surveyActions";
 import { getQuestionList } from "../../../actions/questionActions";
 
-import { Form, Input, Drawer, Button, Checkbox } from "antd";
+import { Form, Input, Drawer, Button, Checkbox, Icon } from "antd";
 
 const FormItem = Form.Item;
 
@@ -114,12 +114,8 @@ class SurveyConfig extends Component {
           </FormItem>
           {questionsLayout}
           <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              // disabled={this.state.disabled}
-            >
-              Submit
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+              <Icon type="plus-square" />
             </Button>
           </FormItem>
         </Form>

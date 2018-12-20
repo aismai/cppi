@@ -19,17 +19,14 @@ const SurveySchema = new Schema({
   },
   region: {
     type: String,
-    // required: true,
-    maxlength: 255
-  },
-  village: {
-    type: String,
-    // required: true,
     maxlength: 255
   },
   place: {
     type: String,
-    // required: true,
+    maxlength: 255
+  },
+  placeDescription: {
+    type: String,
     maxlength: 255
   },
   department: {
@@ -50,10 +47,9 @@ const SurveySchema = new Schema({
   description: {
     type: String
   },
-  evidence: {
+  commentary: {
     type: String
   },
-
   selectedAnswers: [
     {
       answerId: {
