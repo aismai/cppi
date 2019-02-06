@@ -23,6 +23,11 @@ const columns = [
     title: "Варианты ответов",
     dataIndex: "answers",
     render: (text, record) => text.length
+  },
+  {
+    title: "Используется в статистике",
+    dataIndex: "isUsedInStatistics",
+    render: text => (text ? "Да" : "Нет")
   }
 ];
 

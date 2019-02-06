@@ -8,6 +8,8 @@ import { getSurveyList } from "../../../actions/surveyActions";
 
 import PersonalDataForm from "../PersonalDataForm/PersonalDataForm";
 import SurveyForm from "../../Surveys/SurveyForm/SurveyForm";
+import Loader from "../../Loader/Loader";
+import styles from "./PersonalDatum.module.css";
 
 import { Card, Button, Icon, List, Collapse } from "antd";
 
@@ -25,8 +27,7 @@ const titlesMap = {
   employment: "Занятость",
   socialStatus: "Социальный статус",
   location: "Местонахождение",
-  registration: "Наличие регистрации / Прописки по месту проживания",
-  keyGroup: "Ключевая группа"
+  registration: "Наличие регистрации / Прописки по месту проживания"
 };
 
 const booleanValueMap = {
@@ -184,11 +185,7 @@ class PersonalDatum extends Component {
     const dataIsLoaded =
       this.props.datum && this.props.filledSurveys && this.props.surveys;
 
-    return dataIsLoaded ? (
-      this.renderDatum(this.props.datum)
-    ) : (
-      <div>Loading...</div>
-    );
+    return dataIsLoaded ? this.renderDatum(this.props.datum) : <Loader />;
   }
 }
 

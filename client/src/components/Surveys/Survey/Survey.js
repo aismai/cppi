@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getSurvey } from "../../../actions/surveyActions";
 
 import SurveyConfig from "../SurveyConfig/SurveyConfig";
+import Loader from "../../Loader/Loader";
 
 import { Card, Button, Icon, Divider } from "antd";
 
@@ -60,7 +61,7 @@ class Survey extends Component {
     return this.props.survey ? (
       this.renderSurvey(this.props.survey)
     ) : (
-      <div>Loading...</div>
+      <Loader />
     );
   }
 }

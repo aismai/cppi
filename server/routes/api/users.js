@@ -35,10 +35,11 @@ router.post("/login", (req, res) => {
   if (!isValid) return res.status(400).json(errors);
 
   User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user) return res.json({ login: false, msg: "Email not found" });
-
+    if (!user)
+      return res.status(401).json({ login: false, msg: "Email not found" });
     user.comparePassword(req.body.password, (err, isMatch) => {
-      if (!isMatch) return res.json({ login: false, msg: "Wrong Password" });
+      if (!isMatch)
+        return res.status(401).json({ login: false, msg: "Wrong Password" });
 
       const payload = {
         id: user._id,

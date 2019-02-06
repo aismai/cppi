@@ -35,7 +35,15 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
+const CheckboxGroup = Checkbox.Group;
 const dateFormat = "DD/MM/YYYY";
+
+const keyGroupValues = KEY_GROUP.map(groupName => {
+  return {
+    label: groupName,
+    value: groupName
+  };
+});
 
 class PersonalDataForm extends Component {
   handleSubmit = e => {
@@ -43,6 +51,7 @@ class PersonalDataForm extends Component {
     const { datum } = this.props;
 
     this.props.form.validateFields((err, values) => {
+      console.log("VALUES", values);
       if (!err) {
         datum
           ? this.props.updatePersonalDatum({ ...datum, ...values })
@@ -156,17 +165,15 @@ class PersonalDataForm extends Component {
           </Row>
           <Row>
             <Col span={8}>
-              <FormItem>
-                <FormItem label="Пол" required>
-                  {getFieldDecorator("gender", {
-                    rules: [{ required: true, message: "Выберите пол" }]
-                  })(
-                    <RadioGroup>
-                      <Radio value="мужской">Мужской</Radio>
-                      <Radio value="женский">Женский</Radio>
-                    </RadioGroup>
-                  )}
-                </FormItem>
+              <FormItem label="Пол" required>
+                {getFieldDecorator("gender", {
+                  rules: [{ required: true, message: "Выберите пол" }]
+                })(
+                  <RadioGroup>
+                    <Radio value="мужской">Мужской</Radio>
+                    <Radio value="женский">Женский</Radio>
+                  </RadioGroup>
+                )}
               </FormItem>
             </Col>
           </Row>
@@ -229,15 +236,13 @@ class PersonalDataForm extends Component {
           <Row>
             <Col>
               <FormItem label="Регистрация / Прописка">
-                {getFieldDecorator("registration", {
-                  valuePropName: "checked",
-                  initialValue: this.props.datum
-                    ? this.props.datum.registration
-                    : false
-                })(
-                  <Checkbox>
-                    Наличие регистрации / Прописки по месту пребывания
-                  </Checkbox>
+                {getFieldDecorator("registration")(
+                  <RadioGroup>
+                    <Radio value="да">
+                      Наличие регистрации / Прописки по месту пребывания
+                    </Radio>
+                    <Radio value="не знает">Не знает</Radio>
+                  </RadioGroup>
                 )}
               </FormItem>
             </Col>
@@ -257,19 +262,12 @@ class PersonalDataForm extends Component {
                 )}
               </FormItem>
             </Col>
-            <Col span={12}>
+          </Row>
+          <Row gutter={8}>
+            <Col>
               <FormItem label=" Ключевая группа">
-                {getFieldDecorator("keyGroup", {
-                  rules: [
-                    {
-                      required: true,
-                      message: "Пожалуйста выберите ключевую группу"
-                    }
-                  ]
-                })(
-                  <Select placeholder="Выберите один из вариантов">
-                    {this.renderSelectOptions(KEY_GROUP)}
-                  </Select>
+                {getFieldDecorator("keyGroup")(
+                  <CheckboxGroup options={keyGroupValues} />
                 )}
               </FormItem>
             </Col>

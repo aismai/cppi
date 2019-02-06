@@ -19,6 +19,9 @@ router.get(
       mvd: 0,
       gknb: 0,
       gsin: 0,
+      municipality: 0,
+      minzdrav: 0,
+      procecutor: 0,
       bishkek: 0,
       osh: 0,
       chui: 0,
@@ -39,6 +42,9 @@ router.get(
         if (survey.department === "МВД") stats.mvd += 1;
         if (survey.department === "ГКНБ") stats.gknb += 1;
         if (survey.department === "ГСИН") stats.gsin += 1;
+        if (survey.department === "Минздрав") stats.minzdrav += 1;
+        if (survey.department === "Муниципалитет") stats.municipality += 1;
+        if (survey.department === "Прокуратура") stats.procecutor += 1;
         if (survey.region === "Бишкек") stats.bishkek += 1;
         if (survey.region === "Ош") stats.osh += 1;
         if (survey.region === "Чуйская область") stats.chui += 1;
@@ -84,6 +90,7 @@ router.get(
       Questions.find({ isUsedInStatistics: true }).then(questions => {
         questions.forEach(question => {
           const answeredQuestion = {
+            id: question._id,
             body: question.body,
             answers: []
           };
@@ -97,7 +104,6 @@ router.get(
                 );
 
                 if (array.includes(answerId)) {
-                  console.log("includes");
                   answeredQuestion.answers.forEach(answ => {
                     if (answ.answerId === answerId) {
                       answ.quantity = answ.quantity += 1;

@@ -5,6 +5,7 @@ import { getQuestion } from "../../../actions/questionActions";
 
 import { Card, Button, Icon, Divider } from "antd";
 import QuestionForm from "../QuestionForm/QuestionForm";
+import Loader from "../../Loader/Loader";
 
 class Question extends Component {
   state = { showForm: false };
@@ -56,7 +57,7 @@ class Question extends Component {
     return this.props.question ? (
       this.renderQuestion(this.props.question)
     ) : (
-      <div>Loading....</div>
+      <Loader />
     );
   }
 }

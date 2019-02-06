@@ -7,11 +7,13 @@ import {
   getStatsQuestions
 } from "../../actions/surveyActions";
 
+import styles from "./Dashboard.module.css";
+
+import Loader from "../Loader/Loader";
 import { REGION } from "../../constants";
 
 import { Row, Col, Icon } from "antd";
 
-const numberSize = "24px";
 const textSize = "18px";
 
 class Dashboard extends Component {
@@ -39,92 +41,100 @@ class Dashboard extends Component {
     const { stats, questions } = this.props;
     return (
       <div>
-        <Row gutter={16} style={{ paddingTop: "20px" }}>
-          <Col span={6}>
+        <Row gutter={24} style={{ paddingTop: "20px" }}>
+          <Col span={8}>
             <div style={{ textAlign: "center" }}>
-              <h1>Нарушений</h1>
-              <p style={{ fontSize: "48px" }}>{this.props.surveys.length}</p>
-              <span style={{ fontSize: "48px", paddingRight: "20px" }}>
-                {stats.male} <Icon type="man" />
-              </span>
-              <span style={{ fontSize: "48px" }}>
-                {stats.female} <Icon type="woman" />
-              </span>
+              <h1 className={styles.violations}>Нарушений</h1>
+              <p className={styles.violationNumber}>
+                {this.props.surveys.length}
+              </p>
             </div>
           </Col>
-          <Col span={6} style={{ paddingTop: "10px", textAlign: "center" }}>
+
+          <Col span={6} style={{ paddingTop: "15px" }}>
             <div>
-              <h4>МВД</h4>
-              <p style={{ fontSize: numberSize }}>{stats.mvd}</p>
+              <span className={styles.gender}>
+                <Icon type="man" />
+              </span>
+              <span className={styles.genderNumber}> {stats.male} </span>
             </div>
             <div>
-              <h4>ГКНБ</h4>
-              <p style={{ fontSize: numberSize }}>{stats.gknb}</p>
-            </div>
-            <div>
-              <h4>ГСИН</h4>
-              <p style={{ fontSize: numberSize }}>{stats.gsin}</p>
+              <span className={styles.gender}>
+                <Icon type="woman" />
+              </span>
+              <span className={styles.genderNumber}> {stats.female} </span>
             </div>
           </Col>
-          <Col span={6} style={{ paddingTop: "10px" }}>
+
+          <Col span={10} style={{ paddingTop: "18px" }}>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.bishkek}
-              </span>
+              <span className={styles.regionNumber}>{stats.bishkek}</span>
               <span style={{ fontSize: "18px" }}>Бишкек</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.osh}
-              </span>
+              <span className={styles.regionNumber}>{stats.osh}</span>
               <span style={{ fontSize: "18px" }}>Ош</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.chui}
-              </span>
+              <span className={styles.regionNumber}>{stats.chui}</span>
               <span style={{ fontSize: "18px" }}>Чуйская область</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.batken}
-              </span>
+              <span className={styles.regionNumber}>{stats.batken}</span>
               <span style={{ fontSize: "18px" }}>Баткенская область</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.djalalabad}
-              </span>
+              <span className={styles.regionNumber}>{stats.djalalabad}</span>
               <span style={{ fontSize: "18px" }}>Джалал-Абадская область</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.ik}
-              </span>
+              <span className={styles.regionNumber}>{stats.ik}</span>
               <span style={{ fontSize: "18px" }}>Иссык-Кульская область</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.naryn}
-              </span>
+              <span className={styles.regionNumber}>{stats.naryn}</span>
               <span style={{ fontSize: "18px" }}>Нарынская область</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.oshobl}
-              </span>
+              <span className={styles.regionNumber}>{stats.oshobl}</span>
               <span style={{ fontSize: "18px" }}>Ошская область</span>
             </div>
             <div>
-              <span style={{ fontSize: "18px", paddingRight: "10px" }}>
-                {stats.talas}
-              </span>
+              <span className={styles.regionNumber}>{stats.talas}</span>
               <span style={{ fontSize: "18px" }}>Таласская область</span>
             </div>
           </Col>
         </Row>
-        <Row gutter={16}>
-          <Col span={6} style={{ paddingTop: "20px", paddingLeft: "30px" }}>
+        <Row gutter={24} style={{ paddingTop: "20px" }}>
+          <Col span={14}>
+            <div className={styles.departments}>
+              <div>
+                <p>МВД</p>
+                <p className={styles.departmentNumber}>{stats.mvd}</p>
+              </div>
+              <div>
+                <p>ГКНБ</p>
+                <p className={styles.departmentNumber}>{stats.gknb}</p>
+              </div>
+              <div>
+                <p>ГСИН</p>
+                <p className={styles.departmentNumber}>{stats.gsin}</p>
+              </div>
+              <div>
+                <p>Минздрав</p>
+                <p className={styles.departmentNumber}>{stats.minzdrav}</p>
+              </div>
+              <div>
+                <p>Муниципалитет</p>
+                <p className={styles.departmentNumber}>{stats.municipality}</p>
+              </div>
+              <div>
+                <p>Прокуратура</p>
+                <p className={styles.departmentNumber}>{stats.procecutor}</p>
+              </div>
+            </div>
+          </Col>
+          <Col span={10} style={{ paddingTop: "20px" }}>
             {questions.map(question => (
               <div key={question.body} style={{ paddingBottom: "10px" }}>
                 <span style={{ fontSize: "18px", paddingRight: "10px" }}>
@@ -133,7 +143,7 @@ class Dashboard extends Component {
                 <div>
                   {question.answers.map(answer => (
                     <div key={answer.answerId}>
-                      <span style={{ fontSize: "14px", paddingRight: "10px" }}>
+                      <span className={styles.answerNumber}>
                         {answer.quantity}
                       </span>
                       <span style={{ fontSize: "14px" }}>
@@ -156,7 +166,7 @@ class Dashboard extends Component {
       this.props.data &&
       this.props.stats &&
       this.props.questions;
-    return dataLoaded ? this.renderStatistics() : <div>Loading...</div>;
+    return dataLoaded ? this.renderStatistics() : <Loader />;
   }
 }
 

@@ -1,0 +1,50 @@
+.violations {
+  font-size: 300%;
+  color: rgba(0, 0, 0, 0.65);
+  margin: 0;
+}
+
+.violationNumber {
+  /* font-weight: 400; */
+  font-size: 500%;
+  color: #40a9ff;
+}
+
+.gender {
+  font-size: 450%;
+}
+
+.genderNumber {
+  padding-left: 35px;
+  font-size: 400%;
+  color: #40a9ff;
+}
+
+.regionNumber {
+  font-size: 130%;
+  padding-right: 15px;
+  color: #40a9ff;
+}
+
+.departments {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.departments > div {
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+}
+
+.departmentNumber {
+  font-size: 120%;
+  color: #40a9ff;
+}
+
+.answerNumber {
+  color: #40a9ff;
+  padding-right: 10px;
+}

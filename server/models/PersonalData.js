@@ -44,12 +44,14 @@ const PersonalDataSchema = new Schema({
   criminalStatus: {
     type: String
   },
-  keyGroup: {
-    type: String
-  },
+  keyGroup: [
+    {
+      type: String
+    }
+  ],
   registration: {
-    type: Boolean,
-    default: false
+    type: String,
+    maxlength: 255
   },
   citizenship: {
     type: String,

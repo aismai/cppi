@@ -11,6 +11,7 @@ import {
   Form,
   Icon,
   Input,
+  InputNumber,
   Select,
   DatePicker,
   Checkbox,
@@ -212,7 +213,12 @@ class SurveyForm extends Component {
             <Col span={12}>
               <FormItem label="Количество лиц">
                 {getFieldDecorator("numberOfPersons")(
-                  <Input placeholder="Впишите количество" />
+                  <InputNumber
+                    min={0}
+                    max={99}
+                    placeholder="Впишите число"
+                    style={{ width: "100%" }}
+                  />
                 )}
               </FormItem>
             </Col>
@@ -228,7 +234,7 @@ class SurveyForm extends Component {
           <Row>
             <Col>
               <FormItem label="Дополнительные комментарии">
-                {getFieldDecorator(" commentary")(<TextArea rows={4} />)}
+                {getFieldDecorator("commentary")(<TextArea rows={4} />)}
               </FormItem>
             </Col>
           </Row>
