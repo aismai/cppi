@@ -51,7 +51,6 @@ class PersonalDataForm extends Component {
     const { datum } = this.props;
 
     this.props.form.validateFields((err, values) => {
-      console.log("VALUES", values);
       if (!err) {
         datum
           ? this.props.updatePersonalDatum({ ...datum, ...values })
@@ -238,9 +237,8 @@ class PersonalDataForm extends Component {
               <FormItem label="Регистрация / Прописка">
                 {getFieldDecorator("registration")(
                   <RadioGroup>
-                    <Radio value="да">
-                      Наличие регистрации / Прописки по месту пребывания
-                    </Radio>
+                    <Radio value="да">Да</Radio>
+                    <Radio value="нет">Нет</Radio>
                     <Radio value="не знает">Не знает</Radio>
                   </RadioGroup>
                 )}
