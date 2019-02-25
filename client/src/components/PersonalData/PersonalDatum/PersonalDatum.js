@@ -16,7 +16,6 @@ import { Card, Button, Icon, List, Collapse } from "antd";
 const Panel = Collapse.Panel;
 
 const titlesMap = {
-  maritalStatus: "Семейное положение",
   source: "Источник информации",
   code: "Код респондента",
   personalDocument: "Документ удостоверяющий личность",
@@ -27,7 +26,9 @@ const titlesMap = {
   employment: "Занятость",
   socialStatus: "Социальный статус",
   location: "Местонахождение",
-  registration: "Наличие регистрации / Прописки по месту проживания"
+  registration: "Наличие регистрации / Прописки по месту проживания",
+  keyGroup: "Ключевая группа",
+  criminalStatus: "Уголовная история"
 };
 
 const booleanValueMap = {
@@ -62,10 +63,7 @@ class PersonalDatum extends Component {
       if (titlesMap[item]) {
         transformedData.push({
           title: titlesMap[item],
-          description:
-            typeof data[item] === "boolean"
-              ? this.setDescription(item, data)
-              : data[item]
+          description: this.setDescription(item, data)
         });
       }
     }
@@ -74,7 +72,15 @@ class PersonalDatum extends Component {
   };
 
   setDescription = (item, data) => {
-    return booleanValueMap[item][data[item]];
+    if (typeof data[item] === "boolean") {
+      return booleanValueMap[item][data[item]];
+    }
+
+    if (typeof data[item] === "object") {
+      return data[item].join(", ");
+    }
+
+    return data[item];
   };
 
   toggleEditDatum = () => {
@@ -107,7 +113,7 @@ class PersonalDatum extends Component {
       }
     >
       <Collapse accordion bordered={false}>
-        <Panel header="Персональные данные" key="1">
+        <Panel header="Анкетные данные" key="1">
           <List
             itemLayout="horizontal"
             size="small"

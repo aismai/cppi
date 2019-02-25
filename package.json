@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/aismai/cppi#readme",
   "dependencies": {
-    "bcrypt": "2.0.1",
+    "bcrypt": "^3.0.4",
     "body-parser": "1.18.3",
     "concurrently": "^4.0.1",
     "cookie-parser": "1.4.3",

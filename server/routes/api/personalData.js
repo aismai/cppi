@@ -98,7 +98,7 @@ router.post(
       .then(() => {
         Survey.deleteMany({ person: { $in: dataIds } }).then(() => {
           res.json({ success: true });
-        })
+        });
       })
       .catch(err => res.status(404).json(err));
   }

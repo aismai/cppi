@@ -175,7 +175,7 @@ class SurveyForm extends Component {
           </Row>
           <Row>
             <Col>
-              <FormItem label="Уточните место задержания">
+              <FormItem label="Уточните место нарушения">
                 {getFieldDecorator("placeDescription")(
                   <Input placeholder="Уточните место" />
                 )}
