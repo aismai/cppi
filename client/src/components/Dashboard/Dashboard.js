@@ -6,59 +6,14 @@ import {
   getSurveyStats,
   getStatsQuestions
 } from "../../actions/surveyActions";
-
+import axios from "axios";
+import FileDownload from "js-file-download";
 import styles from "./Dashboard.module.css";
 
 import Loader from "../Loader/Loader";
 import { REGION } from "../../constants";
 
 import { Row, Col, Icon, Button } from "antd";
-
-import ReactExport from "react-data-export";
-
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
-const dataSet1 = [
-  {
-    name: "Johson",
-    amount: 30000,
-    sex: "M",
-    is_married: true
-  },
-  {
-    name: "Monika",
-    amount: 355000,
-    sex: "F",
-    is_married: false
-  },
-  {
-    name: "John",
-    amount: 250000,
-    sex: "M",
-    is_married: false
-  },
-  {
-    name: "Josef",
-    amount: 450500,
-    sex: "M",
-    is_married: true
-  }
-];
-
-const dataSet2 = [
-  {
-    name: "Johnson",
-    total: 25,
-    remainig: 16
-  },
-  {
-    name: "Josef",
-    total: 25,
-    remainig: 7
-  }
-];
 
 const textSize = "18px";
 
@@ -83,24 +38,25 @@ class Dashboard extends Component {
     });
   };
 
-  exportToExcel = () => (
-    <ExcelFile element={<button>Download Data</button>}>
-      <ExcelSheet data={dataSet1} name="Employees">
-        <ExcelColumn label="Name" value="name" />
-        <ExcelColumn label="Wallet Money" value="amount" />
-        <ExcelColumn label="Gender" value="sex" />
-        <ExcelColumn
-          label="Marital Status"
-          value={col => (col.is_married ? "Married" : "Single")}
-        />
-      </ExcelSheet>
-      <ExcelSheet data={dataSet2} name="Leaves">
-        <ExcelColumn label="Name" value="name" />
-        <ExcelColumn label="Total Leaves" value="total" />
-        <ExcelColumn label="Remaining Leaves" value="remaining" />
-      </ExcelSheet>
-    </ExcelFile>
-  );
+  exportToExcel = () => {
+    axios
+      .get("/api/stats/export-excel", {
+        responseType: "arraybuffer",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/vnd.ms-excel"
+        }
+      })
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "file.xlsx"); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(error => console.log(error));
+  };
 
   renderStatistics = () => {
     const { stats, questions } = this.props;
@@ -111,8 +67,7 @@ class Dashboard extends Component {
           <Col span={6} />
           <Col span={6} />
           <Col span={6} style={{ textAlign: "right" }}>
-            {this.exportToExcel}
-            <Button>
+            <Button onClick={this.exportToExcel}>
               Export <Icon type="file-excel" />
             </Button>
           </Col>
