@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import FileDownload from "js-file-download";
 import styles from "./Dashboard.module.css";
+import moment from "moment";
 
 import Loader from "../Loader/Loader";
 import { REGION } from "../../constants";
@@ -51,7 +52,10 @@ class Dashboard extends Component {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "file.xlsx"); //or any other extension
+        link.setAttribute(
+          "download",
+          `статистика_${moment(Date.now()).format("DD.MM.YY")}.xlsx`
+        ); //or any other extension
         document.body.appendChild(link);
         link.click();
       })
@@ -136,8 +140,87 @@ class Dashboard extends Component {
             </div>
           </Col>
         </Row>
+        <Row style={{ paddingTop: "40px" }}>
+          <Col span={10}>
+            <h3>Ключевая Группа</h3>
+            <div className={styles.departments}>
+              <div>
+                <p>ЛУИН</p>
+                <p className={styles.departmentNumber}>{stats.luin}</p>
+              </div>
+              <div>
+                <p>БЗ</p>
+                <p className={styles.departmentNumber}>{stats.luin}</p>
+              </div>
+              <div>
+                <p>РС</p>
+                <p className={styles.departmentNumber}>{stats.rs}</p>
+              </div>
+              <div>
+                <p>Клиент ЗТМ</p>
+                <p className={styles.departmentNumber}>{stats.ztm}</p>
+              </div>
+              <div>
+                <p>ЛЖВ</p>
+                <p className={styles.departmentNumber}>{stats.ljv}</p>
+              </div>
+              <div>
+                <p>ЛГБТ</p>
+                <p className={styles.departmentNumber}>{stats.lgbt}</p>
+              </div>
+              <div>
+                <p>ЛОВЗ</p>
+                <p className={styles.departmentNumber}>{stats.lovz}</p>
+              </div>
+              <div>
+                <p>Другое</p>
+                <p className={styles.departmentNumber}>{stats.keyGroupOther}</p>
+              </div>
+            </div>
+          </Col>
+          <Col span={8} offset={4}>
+            <h3>Национальность</h3>
+            <div>
+              <span className={styles.regionNumber}>
+                {stats.nationalityKyrghyz}
+              </span>
+              <span style={{ fontSize: "18px" }}>Кыргыз</span>
+            </div>
+            <div>
+              <span className={styles.regionNumber}>
+                {stats.nationalityRussian}
+              </span>
+              <span style={{ fontSize: "18px" }}>Русский</span>
+            </div>
+            <div>
+              <span className={styles.regionNumber}>
+                {stats.nationalityKazakh}
+              </span>
+              <span style={{ fontSize: "18px" }}>Казах</span>
+            </div>
+            <div>
+              <span className={styles.regionNumber}>
+                {stats.nationalityUzbek}
+              </span>
+              <span style={{ fontSize: "18px" }}>Узбек</span>
+            </div>
+            <div>
+              <span className={styles.regionNumber}>
+                {stats.nationalityUigur}
+              </span>
+              <span style={{ fontSize: "18px" }}>Уйгур</span>
+            </div>
+            <div>
+              <span className={styles.regionNumber}>
+                {stats.nationalityOther}
+              </span>
+              <span style={{ fontSize: "18px" }}>Другое</span>
+            </div>
+          </Col>
+        </Row>
         <Row gutter={24} style={{ paddingTop: "20px" }}>
-          <Col span={14}>
+          <Col span={12}>
+            <h3>Ведомство</h3>
             <div className={styles.departments}>
               <div>
                 <p>МВД</p>
@@ -163,9 +246,15 @@ class Dashboard extends Component {
                 <p>Прокуратура</p>
                 <p className={styles.departmentNumber}>{stats.procecutor}</p>
               </div>
+              <div>
+                <p>Другое</p>
+                <p className={styles.departmentNumber}>
+                  {stats.otherDepartment}
+                </p>
+              </div>
             </div>
           </Col>
-          <Col span={10} style={{ paddingTop: "20px" }}>
+          <Col span={8} offset={4} style={{ paddingTop: "40px" }}>
             {questions.map(question => (
               <div key={question.body} style={{ paddingBottom: "10px" }}>
                 <span style={{ fontSize: "18px", paddingRight: "10px" }}>

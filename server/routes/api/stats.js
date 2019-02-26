@@ -24,6 +24,7 @@ router.get(
       municipality: 0,
       minzdrav: 0,
       procecutor: 0,
+      otherDepartment: 0,
       bishkek: 0,
       osh: 0,
       chui: 0,
@@ -34,7 +35,21 @@ router.get(
       oshobl: 0,
       talas: 0,
       male: 0,
-      female: 0
+      female: 0,
+      luin: 0,
+      bz: 0,
+      rs: 0,
+      ztm: 0,
+      ljv: 0,
+      lgbt: 0,
+      lovz: 0,
+      keyGroupOther: 0,
+      nationalityKyrghyz: 0,
+      nationalityKazakh: 0,
+      nationalityRussian: 0,
+      nationalityUigur: 0,
+      nationalityUzbek: 0,
+      nationalityOther: 0
     };
 
     Survey.find().then(surveys => {
@@ -47,6 +62,8 @@ router.get(
         if (survey.department === "Минздрав") stats.minzdrav += 1;
         if (survey.department === "Муниципалитет") stats.municipality += 1;
         if (survey.department === "Прокуратура") stats.procecutor += 1;
+        if (survey.department === "Другое") stats.otherDepartment += 1;
+
         if (survey.region === "Бишкек") stats.bishkek += 1;
         if (survey.region === "Ош") stats.osh += 1;
         if (survey.region === "Чуйская область") stats.chui += 1;
@@ -62,6 +79,21 @@ router.get(
         data.forEach(datum => {
           if (datum.gender === "мужской") stats.male += 1;
           if (datum.gender === "женский") stats.female += 1;
+          if (datum.nationality === "Кыргыз") stats.nationalityKyrghyz += 1;
+          if (datum.nationality === "Русский") stats.nationalityRussian += 1;
+          if (datum.nationality === "Уйгур") stats.nationalityUigur += 1;
+          if (datum.nationality === "Казах") stats.nationalityKazakh += 1;
+          if (datum.nationality === "Узбек") stats.nationalityUzbek += 1;
+          if (datum.nationality === "Другое") stats.nationalityOther += 1;
+
+          if (datum.keyGroup.includes("ЛУИН")) stats.luin += 1;
+          if (datum.keyGroup.includes("БЗ")) stats.bz += 1;
+          if (datum.keyGroup.includes("РС")) stats.rs += 1;
+          if (datum.keyGroup.includes("Клиент ЗТМ")) stats.ztm += 1;
+          if (datum.keyGroup.includes("ЛЖВ")) stats.ljv += 1;
+          if (datum.keyGroup.includes("ЛГБТ")) stats.lgbt += 1;
+          if (datum.keyGroup.includes("ЛОВЗ")) stats.lovz += 1;
+          if (datum.keyGroup.includes("Другое")) stats.keyGroupOther += 1;
         });
 
         res.json(stats);
