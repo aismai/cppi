@@ -45,7 +45,7 @@ class PersonalData extends Component {
   };
 
   componentDidMount() {
-    this.props.getPersonalData();
+    this.props.getPersonalData(this.props.user);
   }
 
   onSelectChange = selectedRowKeys => {
@@ -112,7 +112,8 @@ class PersonalData extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.personalData.data
+  data: state.personalData.data,
+  user: state.auth.user
 });
 
 export default connect(

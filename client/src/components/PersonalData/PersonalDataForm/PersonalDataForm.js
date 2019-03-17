@@ -54,7 +54,7 @@ class PersonalDataForm extends Component {
       if (!err) {
         datum
           ? this.props.updatePersonalDatum({ ...datum, ...values })
-          : this.props.createPersonalData(values);
+          : this.props.createPersonalData(values, this.props.user);
 
         this.props.closeDrawer();
       }
@@ -290,8 +290,12 @@ class PersonalDataForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { createPersonalData, updatePersonalDatum }
 )(
   Form.create({

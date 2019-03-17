@@ -94,6 +94,10 @@ const PersonalDataSchema = new Schema({
   lawyerPhone: {
     type: String,
     maxlength: 255
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 });
 

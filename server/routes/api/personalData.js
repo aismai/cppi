@@ -13,8 +13,9 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const userQuery = req.query.user ? { user: req.query.user.id } : {};
     const errors = {};
-    PersonalData.find().then(personalData => {
+    PersonalData.find({}).then(personalData => {
       if (!personalData) {
         error.noData = "There are no personal data";
         res.status(404).json({ errors });
@@ -32,7 +33,8 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const newPersonalData = new PersonalData(req.body);
+    const newData = { ...req.body.newPersonalData, user: req.body.user.id };
+    const newPersonalData = new PersonalData(newData);
     newPersonalData.save((err, doc) => {
       if (err) return res.json(err);
 

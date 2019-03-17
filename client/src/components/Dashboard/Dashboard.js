@@ -7,7 +7,6 @@ import {
   getStatsQuestions
 } from "../../actions/surveyActions";
 import axios from "axios";
-import FileDownload from "js-file-download";
 import styles from "./Dashboard.module.css";
 import moment from "moment";
 

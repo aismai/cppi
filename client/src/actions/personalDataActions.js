@@ -9,9 +9,10 @@ import {
   FIND_SURVEY_BY_DATA_ID
 } from "./types";
 
-export const getPersonalData = () => dispatch => {
+export const getPersonalData = user => dispatch => {
+  console.log(user);
   axios
-    .get("/api/personal-data")
+    .get(`/api/personal-data`, { params: { user: user } })
     .then(res =>
       dispatch({
         type: GET_ALL_PERSONAL_DATA,
@@ -26,9 +27,10 @@ export const getPersonalData = () => dispatch => {
     );
 };
 
-export const createPersonalData = newPersonalData => dispatch => {
+export const createPersonalData = (newPersonalData, user) => dispatch => {
+  console.log(user);
   axios
-    .post("/api/personal-data", newPersonalData)
+    .post("/api/personal-data", { newPersonalData, user })
     .then(res =>
       dispatch({
         type: CREATE_PERSONAL_DATA,
