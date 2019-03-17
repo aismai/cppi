@@ -13,9 +13,11 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const userQuery = req.query.user ? { user: req.query.user.id } : {};
+    let userQuery = {};
+    if (req.query.user) userQuery = { user: JSON.parse(req.query.user).id };
+
     const errors = {};
-    PersonalData.find({}).then(personalData => {
+    PersonalData.find(userQuery).then(personalData => {
       if (!personalData) {
         error.noData = "There are no personal data";
         res.status(404).json({ errors });
