@@ -86,7 +86,7 @@ class Register extends Component {
                   message: "Please input your name"
                 },
                 { min: 2, message: "Name must be at least 2 characters" },
-                { max: 8, message: "Name should not exceed 8 characters" }
+                { max: 20, message: "Name should not exceed 8 characters" }
               ]
             })(
               <Input
@@ -105,7 +105,7 @@ class Register extends Component {
                   message: "Please input your last name"
                 },
                 { min: 2, message: "Last name must be at least 2 characters" },
-                { max: 8, message: "Last name should not exceed 8 characters" }
+                { max: 20, message: "Last name should not exceed 8 characters" }
               ]
             })(
               <Input
