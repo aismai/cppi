@@ -29,6 +29,10 @@ class Navbar extends Component {
           className="rightWrapper"
           style={{ float: "right", paddingRight: "55px" }}
         >
+          <span style={{ marginRight: "10px" }}>
+            {this.props.auth.user.name}
+          </span>
+
           <span onClick={this.logOut} style={{ cursor: "pointer" }}>
             <Icon type="logout" />
           </span>
