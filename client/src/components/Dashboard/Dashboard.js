@@ -149,7 +149,7 @@ class Dashboard extends Component {
               </div>
               <div>
                 <p>БЗ</p>
-                <p className={styles.departmentNumber}>{stats.luin}</p>
+                <p className={styles.departmentNumber}>{stats.bz}</p>
               </div>
               <div>
                 <p>РС</p>
