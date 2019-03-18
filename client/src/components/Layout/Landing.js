@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import { Layout, Menu, Icon } from "antd";
 import { NavLink } from "react-router-dom";
 
@@ -43,24 +45,30 @@ class Landing extends Component {
                 <span>Анкетные Данные</span>
               </NavLink>
             </Menu.Item>
-            <Menu.Item key="3">
-              <NavLink to="/surveys">
-                <Icon type="form" theme="outlined" />
-                <span>Формы</span>
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <NavLink to="/questions">
-                <Icon type="file-unknown" theme="outlined" />
-                <span>Вопросы</span>
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <NavLink to="/users">
-                <Icon type="user" theme="outlined" />
-                <span>Пользователи</span>
-              </NavLink>
-            </Menu.Item>
+            {this.props.user.isAdmin && (
+              <Menu.Item key="3">
+                <NavLink to="/surveys">
+                  <Icon type="form" theme="outlined" />
+                  <span>Формы</span>
+                </NavLink>
+              </Menu.Item>
+            )}
+            {this.props.user.isAdmin && (
+              <Menu.Item key="4">
+                <NavLink to="/questions">
+                  <Icon type="file-unknown" theme="outlined" />
+                  <span>Вопросы</span>
+                </NavLink>
+              </Menu.Item>
+            )}
+            {this.props.user.isAdmin && (
+              <Menu.Item key="5">
+                <NavLink to="/users">
+                  <Icon type="user" theme="outlined" />
+                  <span>Пользователи</span>
+                </NavLink>
+              </Menu.Item>
+            )}
           </Menu>
         </Sider>
         <Layout>
@@ -91,4 +99,8 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
+
+export default connect(mapStateToProps)(Landing);

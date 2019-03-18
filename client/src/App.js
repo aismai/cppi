@@ -6,6 +6,7 @@ import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import PrivateRoute from "./components/Common/PrivateRoute";
+import AdminRoute from "./components/Common/AdminRoute";
 
 import Landing from "./components/Layout/Landing";
 
@@ -65,15 +66,15 @@ class App extends Component {
                   path="/personal-data/:personalDatumId"
                   component={PersonalDatum}
                 />
-                <PrivateRoute exact path="/users" component={Profiles} />
-                <PrivateRoute exact path="/questions" component={Questions} />
-                <PrivateRoute
+                <AdminRoute exact path="/users" component={Profiles} />
+                <AdminRoute exact path="/questions" component={Questions} />
+                <AdminRoute
                   exact
                   path="/questions/:questionId"
                   component={Question}
                 />
-                <PrivateRoute exact path="/surveys" component={Surveys} />
-                <PrivateRoute
+                <AdminRoute exact path="/surveys" component={Surveys} />
+                <AdminRoute
                   exact
                   path="/surveys/:surveyId"
                   component={Survey}
