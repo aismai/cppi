@@ -10,7 +10,6 @@ import {
 } from "./types";
 
 export const getPersonalData = user => dispatch => {
-  console.log(user);
   axios
     .get(`/api/personal-data`, { params: { user: user } })
     .then(res =>

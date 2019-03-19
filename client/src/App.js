@@ -51,7 +51,6 @@ class App extends Component {
         <Router>
           <div className="App">
             <Switch>
-              <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Landing>
                 <PrivateRoute exact path="/" component={Dashboard} />
@@ -79,6 +78,7 @@ class App extends Component {
                   path="/surveys/:surveyId"
                   component={Survey}
                 />
+                <AdminRoute exact path="/register" component={Register} />
               </Landing>
             </Switch>
           </div>

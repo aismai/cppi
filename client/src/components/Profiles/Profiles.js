@@ -45,6 +45,10 @@ class Profiles extends Component {
     this.props.deleteUsers(selectedRowKeys);
   };
 
+  handleOnCreateUser = () => {
+    this.props.history.push(`/register`);
+  };
+
   render() {
     const data = this.props.users;
     const { selectedRowKeys } = this.state;
@@ -59,7 +63,11 @@ class Profiles extends Component {
         <Row style={{ paddingBottom: "20px" }}>
           <Col span={6} />
           <Col span={6} />
-          <Col span={6} />
+          <Col span={6}>
+            <Button onClick={this.handleOnCreateUser}>
+              <Icon type="plus-circle" />
+            </Button>
+          </Col>
           <Col span={6} style={{ textAlign: "right" }}>
             <Button
               type="danger"
@@ -87,7 +95,8 @@ Profiles.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  users: state.profiles.userList
+  users: state.profiles.userList,
+  user: state.auth.user
 });
 
 export default connect(

@@ -16,7 +16,7 @@ class Register extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (!this.props.auth.user.isAdmin) {
       this.props.history.push("/");
     }
   }
@@ -25,7 +25,6 @@ class Register extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         this.props.registerUser(values, this.props.history);
       }
     });
@@ -185,7 +184,7 @@ class Register extends Component {
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
-              Register
+              Create User
             </Button>
           </FormItem>
         </Form>

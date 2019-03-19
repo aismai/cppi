@@ -42,7 +42,7 @@ class Landing extends Component {
             <Menu.Item key="2">
               <NavLink to="/personal-data">
                 <Icon type="folder-open" theme="outlined" />
-                <span>Анкетные Данные</span>
+                <span>Создать Кейс</span>
               </NavLink>
             </Menu.Item>
             {this.props.user.isAdmin && (

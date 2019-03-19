@@ -13,8 +13,12 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const user = req.query.user ? JSON.parse(req.query.user) : {};
     let userQuery = {};
-    if (req.query.user) userQuery = { user: JSON.parse(req.query.user).id };
+
+    if (user) {
+      userQuery = user.isAdmin ? {} : { user: user.id };
+    }
 
     const errors = {};
     PersonalData.find(userQuery).then(personalData => {
